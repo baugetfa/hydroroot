@@ -15,4 +15,3 @@ dependencies:
   - yaml
   - pyyaml
   - rsml
-  - mesa-libgl-cos7-x86_64
