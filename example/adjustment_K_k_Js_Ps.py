@@ -24,14 +24,14 @@ Usage:
 
 Inputs:
     - yaml file given in command line argument
-    - data/maize_cnf_data.csv: may be changed see begining of main, csv file containing data of cut and flow data of with
+    - data/cnf_data.csv: may be changed see begining of main, csv file containing data of cut and flow data of with
             the following columns:
-            - arch: sample name that must be contained in the 'input_file' of the yaml file
+            - arch: sample name, the string must be contained in the 'input_file' name given in the yaml file
             - dP_Mpa: column with the working cut and flow pressure (in relative to the base) if constant, may be empty see below
             - J0, J1, ..., Jn: columns that start with 'J' containing the flux values, 1st the for the full root, then 1st cut, 2d cut, etc.
             - lcut1, ...., lcutn: columns starting with 'lcut' containing the maximum length to the base after each cut, 1st cut, 2d cut, etc. (not the for full root) 
             - dP0, dP1,.., dPn: column starting with 'dP' containing the working pressure (in relative to the base) of each steps (if not constant): full root, 1st cut, 2d cut, etc.
-    - data/maize_Lpr_data.csv: may be changed see begining of main, csv file containing data of Jv(P) data of with
+    - data/Lpr_data.csv: may be changed see begining of main, csv file containing data of Jv(P) data of with
             the following columns:
             - arch: sample name that must be contained in the 'input_file' of the yaml file
             - J0, J1, ..., Jn: columns that start with 'J' containing the flux values of each pressure steps
@@ -543,9 +543,9 @@ if __name__ == '__main__':
 
     # files with the experimental data of cnf and Jv(P) see DP_cnf, Jexp, list_DP and list_Jext
     # see comments at the top of this file
-    fn = 'data/maize_cnf_data.csv'
+    fn = 'data/cnf_data.csv'
     df_exp = pd.read_csv(fn, sep = ',', keep_default_na = True)
-    fn = 'data/maize_Lpr_data.csv'
+    fn = 'data/Lpr_data.csv'
     df_exp2 = pd.read_csv(fn, sep = ',', keep_default_na = True)
 
     # files names of the architecture if reconstructed from a file
@@ -631,7 +631,7 @@ if __name__ == '__main__':
     else:
         fun_objective = fun
 
-    dK_constraint = 0.0 #-0.04 # dK/dx >= dK_constraint
+    dK_constraint = -0.04 # dK/dx >= dK_constraint
     dK_constraint_max = 6.0e-2 # deprecated
     _tol = 5.0e-7 # does not have significant impact !!?? used in some minimize.optimize solver
     eps = 1.0e-9 # global: stop criterion for the Newton-Raphson loop in Jv_P_calculation and Jv_cnf_calculation
@@ -1021,7 +1021,7 @@ if __name__ == '__main__':
     dK.plot.line(x = 'x pr', y = 'K pr', ax = axs[1, 0])
     axs[1, 0].set_ylim(min(dK1st['K1st pr'].min(),dK['K pr'].min()),max(dK1st['K1st pr'].max(),dK['K pr'].max()))
 
-    fig.suptitle(index + 'WIP', fontsize = 16)
+    fig.suptitle(index, fontsize = 16)
 
     K = {}
     K['x lr'] = axial_lr[0]

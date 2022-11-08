@@ -2,7 +2,7 @@
 Usage
 =====
 
-Many examples are given in the notebook *example\boursiac2022.ipynb* that reproduces most of the figures and tables of Boursiac et al. [boursiac2022]_.
+Many examples are given in the notebook *example/boursiac2022.ipynb* that reproduces most of the figures and tables of Boursiac et al. [boursiac2022]_.
 
 Run calculation on a given architecture
 ---------------------------------------
@@ -29,17 +29,22 @@ This is a tab separated text file with 3 columns:
 2. the lateral root length in mm
 3. a string of one or more number indicating the parent root
 
-In the example above, the root has two lateral of 1st order and on each of them one lateral of 2d order. The order of 1 indicates that the laterals are on the primary root. The last line with order 1 with 0.0 in the second column indicates the primary root tip.
-The line with order 1-1 indicates that this a second order lateral on the first lateral positioned at 2.14 mm from the branching on the primary root. And so on.
+In the example above, the root has two laterals of 1st order and on each of them one lateral of 2nd order. Order of 1
+indicates that the laterals are on the primary root. The last line of order 1 with 0.0 in the second column indicates the primary root tip.
+The line with order 1-1 indicates that this is a second order lateral on the first lateral of the primary, positioned at 2.14 mm from the branching
+on the primary root. The 0.0 in the 2nd column in the line below indicates the tip of the lateral. 1-2 stands for the 2nd lateral on the primary
+root.
 
-A 4th column with the averaged diameter of the root may be given, that may be used to build the MTG representing the architecture.
+A 4th column with the averaged diameter of the lateral roots, and the primary in the last row, may be given, that may
+be used to build the MTG representing the architecture.
 
 Running the calculation
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The corresponding notebook is *example/example_archi_from_file.ipynb*
 
-If the package HydroRoot is not installed, the following examples can be run by cloning the sources from git and then sourcing the src directory in Ipython console for instance like this:
+If the package HydroRoot is not installed, the following examples can be run by cloning the sources from git and then
+sourcing the src directory in Ipython console for instance like this:
 
 .. code-block:: python
 
@@ -48,7 +53,10 @@ If the package HydroRoot is not installed, the following examples can be run by 
 
 assuming the dependencies installed.
 
-The following lines present a small example of calculation of the sap flux from an Arabidopsis de-topped root plunged in a hydroponic solution at a hydrostatic pressure of 0.4 Mpa when its  base is at the atmospheric pressure.
+The following lines present a small example of calculation of the sap flux from an Arabidopsis de-topped root plunged
+in a hydroponic solution at a hydrostatic pressure of 0.4 MPa when its  base is at the atmospheric pressure.
+
+Import the modules needed.
 
 .. code-block:: python
 
@@ -56,17 +64,23 @@ The following lines present a small example of calculation of the sap flux from 
     from hydroroot.read_file import read_archi_data
     from hydroroot.main import hydroroot_flow, root_builder
 
-Reading the file architecture as a DataFrame
+Read the file architecture as a DataFrame and give properties related to root radius:
+
+- radius of the primary in meter
+- a decrease factor between root orders
 
 .. code-block:: python
 
     df = read_archi_data('data/plant-01.txt')
+    r_pr = 7e-05 # radius of the primary in m
+    beta = 0.7 # decrease factor at each order
 
-Building the MTG from the file, and  return the primary root length, the total length and the surface. The seed refer to the seed of the root generator when the MTG is not built from a file but is generated.
+Building the MTG from the file, and  return the primary root length, the total length and the surface. The seed refer
+to the seed of the root generator when the MTG is not built from a file but is generated.
 
 .. code-block:: python
 
-    g, primary_length, total_length, surface, seed = root_builder(df=df, segment_length=1.0e-4)
+    g, primary_length, total_length, surface, seed = root_builder(df=df, segment_length=1.0e-4, order_decrease_factor = beta, ref_radius = r_pr)
 
 Some conductance data versus distance to tip
 
@@ -117,6 +131,10 @@ Or the axial conductance
     g, keq, jv = hydroroot_flow(g, psi_e = 0.4, psi_base = 0.1, axial_conductivity_data = K_axial_data, radial_conductivity_data = k_radial_data)
     print('sap flux (microL/s): ', jv)
     plot(g, prop_cmap='j')
+
+Other examples
+...............
+example/example_archi_from_file_sensibility_analysis.ipynb is based on the same example with a simple sensibility analysis on the axial and radial conductances.
 
 Importing architecture from RSML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

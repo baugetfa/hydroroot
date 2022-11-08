@@ -42,9 +42,9 @@ def set_conductances(g, axial_pr, k0_pr, axial_lr = None, k0_lr = None):
 
     :param g: (MTG)
     :param axial_pr: (list) - axial conductance (:math:`10^{-9}\ m^4.MPa^{-1}.s^{-1}`) vs distance to tip, 2 lists of float
-    :param k0_pr: (float) - radial donductivity (:math:`10^{-9}\ m.MPa^{-1}.s^{-1}`)
+    :param k0_pr: (float) - radial conductivity (:math:`10^{-9}\ m.MPa^{-1}.s^{-1}`)
     :param axial_lr: (list) - axial conductance (:math:`10^{-9}\ m^4.MPa^{-1}.s^{-1}`) for root of order > 0, 2 lists of float (Default value = None)
-    :param k0_lr: (float) - radial donductivity  (:math:`10^{-9}\ m.MPa^{-1}.s^{-1}`) for root of order > 0 (Default value = None)
+    :param k0_lr: (float) - radial conductivity  (:math:`10^{-9}\ m.MPa^{-1}.s^{-1}`) for root of order > 0 (Default value = None)
     :returns: - g (MTG)
 
     """
