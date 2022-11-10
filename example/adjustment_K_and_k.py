@@ -342,8 +342,8 @@ if __name__ == '__main__':
             radfold = res.x[-1] # always the last one even if the only one
             axfold = res.x[0]
 
-            print("finished minimize ax, ar", res)
-            print("*******************************************************************************")
+            print("finished minimize ax, ar", res.x)
+            print("**********************************")
         
         ## update the conductivities according to the first adjustment
         axial_data = list(conductance.axial(parameter.hydro['axial_conductance_data'], axfold))
@@ -409,7 +409,7 @@ if __name__ == '__main__':
             axial_data[1] = list(res.x)
             x = copy.deepcopy(res.x)
 
-            print("finished minimize Kx", res)
+            # print("finished minimize Kx", res.x)
 
             ## -1 radial k adjusted
             #######################
@@ -419,6 +419,9 @@ if __name__ == '__main__':
 
             k0 = resk0.x[0]
         
+        print('**********************')
+        print('optimization finished')
+        print('**********************')
 
         # parameter.hydro['k0'] = k0
 
@@ -490,6 +493,10 @@ if __name__ == '__main__':
 
         ax_K = doptim.plot.line('x', 'K 1st', c = 'black')
         doptim.plot.line('x', 'K optimized', c = 'purple', ax = ax_K)
+        
+        print('************************************************************')
+        print('radial k 1st: ', parameter.hydro['k0'], ', k optimized: ', k0)
+        print('************************************************************')
     else:
         df = dresults
 
