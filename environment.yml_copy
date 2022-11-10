@@ -1,0 +1,17 @@
+name: hydroroot
+channels:
+  - openalea3
+  - conda-forge
+dependencies:
+  - openalea.deploy
+  - openalea.mtg
+  - openalea.plantgl
+  #- alinea.caribu
+  - jupyterlab
+  - matplotlib
+  - numpy
+  - pandas
+  - scipy
+  - yaml
+  - pyyaml
+  - rsml
