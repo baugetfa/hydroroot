@@ -238,5 +238,4 @@ dependencies:
   - zstd=1.5.2=h6239696_4
   - oawidgets==1.0.1
   - rsml==1.1.2
-prefix: /home/fabrice/miniconda2/envs/hydroroot_new
 
