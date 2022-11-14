@@ -53,13 +53,21 @@ import time
 import copy
 import pandas as pd
 import matplotlib.pyplot as plt
-
+# import k3d
 from scipy import optimize
+
+from openalea.plantgl.all import *
+from openalea.mtg import *
+from oawidgets.plantgl import PlantGL
 
 from hydroroot import flux, conductance, radius
 from hydroroot.main import hydroroot_flow, root_builder
 from hydroroot.init_parameter import Parameters
 from hydroroot.read_file import read_archi_data
+from hydroroot.display import mtg_scene
+from ipywidgets import interact, fixed
+
+from openalea.plantgl.algo.view import view
 
 
 results = {}
@@ -93,32 +101,54 @@ if Flag_Optim is None: Flag_Optim = False
 # if Flag_verbose is None: Flag_verbose = False
 parameter.read_file(filename)
 
+
 def plot_architecture():
-    from openalea.plantgl.algo.view import interactive_view, view
-    from hydroroot.display import mtg_scene
-    from ipywidgets import interact, fixed
 
-    def my_view(cut: str = 'tot', prop: str = 'j', imgsize: tuple = (800, 800), perspective: bool = True, zoom: float = 1,
+    def my_view(cut: str = 'tot', prop: str = 'j', imgsize: tuple = (800, 800), perspective: bool = True,
+                zoom: float = 1,
                 azimuth: float = 0, elevation: float = 0, line_width = 1.0):
+        list_prop = {'radial flux': 'j', 'xylem pressure': 'psi_in', 'axial K': 'K', 'axial flux': 'J_out'}
 
-        list_prop = {'radial flux' : 'j', 'xylem pressure' : 'psi_in', 'axial K' : 'K', 'axial flux' : 'J_out'}
-        
         g = g_cut[cut].copy()
-        
+
         keys = list(g.property('radius').keys())
-        radius=np.array(list(g.property('radius').values()))
+        radius = np.array(list(g.property('radius').values()))
         new_radius = radius * line_width
         g.properties()['radius'] = dict(list(zip(keys, new_radius)))
 
         s = mtg_scene(g, prop_cmap = list_prop[prop], has_radius = True)
-        view(scene = s, imgsize = imgsize, perspective = perspective, zoom = zoom, azimuth = azimuth, elevation = elevation)
+        return view(scene = s, imgsize = imgsize, perspective = perspective, zoom = zoom, azimuth = azimuth, elevation = elevation)
 
     _list = ['tot']
     for i in cut_n_flow_length:
         _list.append(str(i))
 
-    interact(my_view, cut = _list, prop = ['radial flux', 'xylem pressure', 'axial K', 'axial flux'], imgsize = fixed((800, 800)),
+    interact(my_view, cut = _list, prop = ['radial flux', 'xylem pressure', 'axial K', 'axial flux'],
+             imgsize = fixed((800, 800)),
              perspective = False, zoom = (0.01, 1), azimuth = (-180, 180), elevation = (-90, 90), line_width = (1, 5))
+
+
+def plot_3D():
+    def my_view(cut: str = 'tot', prop: str = 'j', line_width = 1.0):
+        list_prop = {'radial flux': 'j', 'xylem pressure': 'psi_in', 'axial K': 'K', 'axial flux': 'J_out'}
+
+        g = g_cut[cut].copy()
+
+        keys = list(g.property('radius').keys())
+        radius = np.array(list(g.property('radius').values()))
+        new_radius = radius * line_width
+        g.properties()['radius'] = dict(list(zip(keys, new_radius)))
+
+        s = mtg_scene(g, prop_cmap = list_prop[prop], has_radius = True)
+
+        return PlantGL(s)
+
+    _list = ['tot']
+    for i in cut_n_flow_length:
+        _list.append(str(i))
+
+    interact(my_view, cut = _list, prop = ['radial flux', 'xylem pressure', 'axial K', 'axial flux'],
+             line_width = (1, 5))
 
 def hydro_calculation(g, axfold = 1., radfold = 1., axial_data = None, k_radial = None, psi_base = 0.1, psi_e = 0.1):
     if axial_data is None: axial_data = parameter.hydro['axial_conductance_data']
