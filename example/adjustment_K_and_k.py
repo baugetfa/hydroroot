@@ -527,8 +527,13 @@ if __name__ == '__main__':
         print('************************************************************')
         print('radial k 1st: ', parameter.hydro['k0'], ', k optimized: ', k0)
         print('************************************************************')
+        fig, ax2 = plt.subplots()
+        f1=ax2.bar(x=['radial k 1st','k optimized'], height = [parameter.hydro['k0'],k0])
+        ax2.set_ylabel('radial k (10-9 m/s/MPa)')
     else:
         df = dresults
+    
+    
 
     plt.show()
 
