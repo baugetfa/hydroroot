@@ -74,7 +74,7 @@ def pressure_calculation(g, Temp = 298, sigma = 1.0,  Ce = 0.0, Cse = 0.0, dP = 
     # Select the base of the root
     v_base = 1  # it has to be = 1 here because based on first index == 1
     nid = 0
-    if C_base is None: C_base = C[v_base]  # boundary condition at the root base
+    if C_base is None: C_base = C[v_base]  # boundary condition at the root base: C_base = C[1] <=> dC/dx=0
     m = 20 * n - 12  # -12 because of the coefficients outside the matrix at the boundaries
     ############
     # row and col indexes should be calculated once
@@ -421,7 +421,7 @@ def pressure_calculation_no_non_permeating_solutes(g, Temp = 298, sigma = 1.0, C
 
     # Select the base of the root
     v_base = 1  # it has to be = 1 here because based on firts index == 1
-    if C_base is None: C_base = C[v_base] # boundary condition at the root base
+    if C_base is None: C_base = C[v_base] # boundary condition at the root base: C_base = C[1] <=> dC/dx=0
     nid = 0
     if data is None:
         # constant Matrix elements calculated only once, is data is None not a lot faster
