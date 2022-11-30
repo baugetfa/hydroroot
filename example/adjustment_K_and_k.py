@@ -416,21 +416,21 @@ if __name__ == '__main__':
     ######################################
     count = 1
     for cut_length in cut_n_flow_length:
-        _g = g_cut[str(cut_length)].copy()
+        # _g = g_cut[str(cut_length)].copy()
 
-        for vid in _g.vertices_iter(g_cut['tot'].max_scale()):
-            _g.property('K')[vid] = g_cut['tot'].property('K')[vid]
-            _g.property('k')[vid] = g_cut['tot'].property('k')[vid]
+        for vid in g_cut[str(cut_length)].vertices_iter(g_cut['tot'].max_scale()):
+            g_cut[str(cut_length)].property('K')[vid] = g_cut['tot'].property('K')[vid]
+            g_cut[str(cut_length)].property('k')[vid] = g_cut['tot'].property('k')[vid]
 
         for i in tip_id[str(cut_length)]:
             v = g_cut['tot'].parent(i)
-            _g.property('k')[v] = _g.property('K')[v]
+            g_cut[str(cut_length)].property('k')[v] = g_cut[str(cut_length)].property('K')[v]
 
-        _g = flux.flux(_g, psi_e = psi_base + DP_cnf[count], psi_base = psi_base, invert_model = True)
+        g_cut[str(cut_length)] = flux.flux(g_cut[str(cut_length)], psi_e = psi_base + DP_cnf[count], psi_base = psi_base, invert_model = True)
 
-        Jv = _g.property('J_out')[1]
-        _g, surface = radius.compute_surface(_g)
-        _length = _g.nb_vertices(scale = 1) * parameter.archi['segment_length']
+        Jv = g_cut[str(cut_length)].property('J_out')[1]
+        g_cut[str(cut_length)], surface = radius.compute_surface(g_cut[str(cut_length)])
+        _length = g_cut[str(cut_length)].nb_vertices(scale = 1) * parameter.archi['segment_length']
 
         primary_length = cut_length
         results['plant'].append(index)
