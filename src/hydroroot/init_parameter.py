@@ -102,12 +102,14 @@ class Parameters():
     def read_file(self, filename = None):
         """Read the input yaml file, set the class variables and perform some initialization
         see :func:`~init_parameter.Parameters.init_calculation`
+        
+        Some parameters in the yaml file can be entered as follows 'range(start,end,step)' or simply as list.
+        This was to be able to perform sensibility analysis on some parameter. Therefore, these parameters
+        are systematically changed to list even if tey are single number. These parameters are: primary_length,
+        seed, branching_delay, nude_length, intercepts, radfold and axfold
 
         :param filename: string (Default value = None)
-        :param return: itself
-        :param Some: instance variables are converted to list if not they are not list in the yaml file
-        :param branching_delay: nude_length
-
+        :return itself
         """
 
         # read the file as a dictionary
@@ -148,8 +150,6 @@ class Parameters():
         Set the seed to None if seed is not an integer nor a list of integer
         
         :return: itself
-
-
         """
 
         # set the data used to calculate the length laws
@@ -183,15 +183,12 @@ class Parameters():
         """transform parameter to a list
 
         :param parameter: the parameter to transform to a list
-        :param return: 
-        :param parameter: list
-        :param In: the yaml file it is possible to use the following syntaxe
-        :param this: syntax and the corresponding list is calculated
-        :param to: a list of one single element
-        :param For: example
-        :param range: 
-        :param 0: 02 is converted to
-        :param see: func
+        :return parameter 
+
+        In the yaml file it is possible to use the following syntaxe 'range(start,end,step)'
+        this string is then transformed to a list equal to 'numpy.arange(start,end,step)'
+
+        :example: range(1,2,0.25) is converted to [1.0, 1.25, 1.5, 1.75]
 
         """
         if type(parameter) != list:
