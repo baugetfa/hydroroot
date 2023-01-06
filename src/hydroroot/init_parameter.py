@@ -69,12 +69,12 @@ class Parameters():
             'seed': None,
             'length_file': ['data/length*order2*.csv', 'data/length*order2*.csv'],
             'length_data': [],
-            'primary_length': 0.13,
-            'branching_delay': 2e-3,
+            'primary_length': [0.13], # F. Bauget 2022-12-16 : some parameters are list see below
+            'branching_delay': [2e-3],
             'branching_variability': 0.25,
             'order_max': 4,
             'segment_length': 1.e-4,
-            'nude_length': 0.021,
+            'nude_length': [0.021],
             'ref_radius': 7.0e-5,
             'order_decrease_factor': 0.7}
 
@@ -94,8 +94,8 @@ class Parameters():
             'psi_base': 0.101325}
 
         self.output = {
-            'radfold': 1.0,
-            'axfold': 1.0,
+            'radfold': [1.0],
+            'axfold': [1.0],
             'intercepts': [0.01, 0.02, 0.03, 0.045, 0.06, 0.08],
             'run_nb': 1}
 
