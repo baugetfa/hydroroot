@@ -271,9 +271,4 @@ dependencies:
   - zipp=3.11.0=pyhd8ed1ab_0
   - zlib=1.2.13=h166bdaf_4
   - zstd=1.5.2=h6239696_4
-  - pip:
-      - oawidgets==1.0.1
-      - openalea-deploy==3.0.1
-      - openalea-mtg==2.1.2
-      - openalea-plantgl==3.13.1
 prefix: /home/fabrice/miniconda3/envs/hydroroot
