@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hydroroot.read_file &mdash; HydroRoot 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> HydroRoot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modeling_principles.html">Modeling principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">HydroRoot’s API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydroRoot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>hydroroot.read_file</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for hydroroot.read_file</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<div class="viewcode-block" id="readCSVFile"><a class="viewcode-back" href="../../user/api_read_file.html#hydroroot.read_file.readCSVFile">[docs]</a><span class="k">def</span> <span class="nf">readCSVFile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read and extract data from a csv file, supposed that the data is stored in 2 columns.</span>
+
+<span class="sd">    :param filename: string</span>
+<span class="sd">    :returns: - data (array) - record array of (x, y) values, column headers recorded in dtype</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">recfromcsv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="read_archi_data"><a class="viewcode-back" href="../../user/api_read_file.html#hydroroot.read_file.read_archi_data">[docs]</a><span class="k">def</span> <span class="nf">read_archi_data</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read a csv (tab separated) file with the architecture in the following format</span>
+
+<span class="sd">    :param fn: (string) - the architecture filename in csv format with tab as delimiter</span>
+<span class="sd">    :returns: - DataFrame</span>
+
+<span class="sd">    :file structure:</span>
+
+<span class="sd">    +--------------------------+----------------------------+-------+-------------------------+</span>
+<span class="sd">    |&#39;distance_from_base_(mm)&#39; | &#39;lateral_root_length_(mm)&#39; | order | &#39;averaged_diameter_(mm)&#39;|</span>
+<span class="sd">    +--------------------------+----------------------------+-------+-------------------------+</span>
+<span class="sd">    |float                     | float                      | string| float                   |</span>
+<span class="sd">    +--------------------------+----------------------------+-------+-------------------------+</span>
+
+<span class="sd">    - order = 1 for laterals of 1st order ob the primary</span>
+<span class="sd">    - order = n-m for the lateral number m on the lateral number n of 1st order</span>
+<span class="sd">    - order = n-m-o for the lateral number o of the previous one</span>
+
+<span class="sd">    Each branch finish with a nude part, i.e. a distance from base (the tip value) and a zero length</span>
+<span class="sd">    The &#39;averaged_diameter_(mm)&#39; is not mandatory, if present allow calculation of radii for each laterals</span>
+<span class="sd">    if not the radii of PR and LR will be calculated in routine radius.ordered_radius.</span>
+<span class="sd">    the resulting dataframe must be in meter and have the following column names: &#39;db&#39;, &#39;lr&#39;, &#39;order&#39; and &#39;radius&#39; (optional)</span>
+<span class="sd">    these names are used in mtg_from_aqua_data to build the MTG</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">})</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;db&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;distance_from_base_(mm)&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.e-3</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lateral_root_length_(mm)&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.e-3</span>
+
+    <span class="k">if</span> <span class="s1">&#39;averaged_diameter_(mm)&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;averaged_diameter_(mm)&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5e-3</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Yann Boursiac, Christophe Pradal, Fabrice Bauget, Mikaël Lucas, Christophe Godin, Christophe Maurel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

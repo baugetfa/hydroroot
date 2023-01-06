@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hydroroot.main &mdash; HydroRoot 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> HydroRoot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modeling_principles.html">Modeling principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">HydroRoot’s API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydroRoot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>hydroroot.main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for hydroroot.main</h1><div class="highlight"><pre>
+<span></span>
+
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+<span class="c1"># import numpy as np</span>
+
+<span class="kn">from</span> <span class="nn">openalea.mtg</span> <span class="kn">import</span> <span class="n">traversal</span>
+
+<span class="kn">from</span> <span class="nn">hydroroot.length</span> <span class="kn">import</span> <span class="n">fit_law</span>
+<span class="kn">from</span> <span class="nn">hydroroot</span> <span class="kn">import</span> <span class="n">radius</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span> <span class="n">conductance</span> 
+<span class="kn">from</span> <span class="nn">hydroroot.generator</span> <span class="kn">import</span> <span class="n">markov</span><span class="p">,</span> <span class="n">measured_root</span> <span class="c1"># 21-12-14: FB __init__.py in src not doing job</span>
+
+
+<div class="viewcode-block" id="hydroroot_mtg"><a class="viewcode-back" href="../../user/api_main.html#hydroroot.main.hydroroot_mtg">[docs]</a><span class="k">def</span> <span class="nf">hydroroot_mtg</span><span class="p">(</span>
+    <span class="n">primary_length</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">delta</span><span class="o">=</span><span class="mf">2.e-3</span><span class="p">,</span>
+    <span class="n">beta</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">order_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">segment_length</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">nude_length</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">ref_radius</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">order_decrease_factor</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">length_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwds</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate and generate a root system.</span>
+
+<span class="sd">    :param primary_length: Float (Default value = 0.15)</span>
+<span class="sd">    :param delta: Float (Default value = 2.e-3)</span>
+<span class="sd">    :param beta: Float (Default value = 0.25)</span>
+<span class="sd">    :param order_max: int (Default value = 5)</span>
+<span class="sd">    :param segment_length: Float (Default value = 1e-4)</span>
+<span class="sd">    :param nude_length: Float (Default value = 0.02)</span>
+<span class="sd">    :param seed: int (Default value = 2)</span>
+<span class="sd">    :param ref_radius: Float (Default value = 1e-4)</span>
+<span class="sd">    :param order_decrease_factor: Float (Default value = 0.7)</span>
+<span class="sd">    :param length_data: pandas dataframe (Default value = None)</span>
+<span class="sd">    :param n: int (Default value = None)</span>
+
+<span class="sd">    :returns: - g</span>
+<span class="sd">        - surface</span>
+<span class="sd">        - volume</span>
+<span class="sd">    </span>
+<span class="sd">    Example</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># F. Bauget 2022-08-12: added if-else to be able to use the function without length data, useful for usage demo</span>
+    <span class="k">if</span> <span class="n">length_data</span><span class="p">:</span>
+        <span class="n">xl</span><span class="p">,</span> <span class="n">yl</span> <span class="o">=</span> <span class="n">length_data</span>
+        <span class="n">length_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xl</span><span class="p">,</span> <span class="n">yl</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">segment_length</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">length_law</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># compute the architecture</span>
+    <span class="n">nb_nude_vertices</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nude_length</span> <span class="o">/</span> <span class="n">segment_length</span><span class="p">)</span>
+    <span class="n">branching_delay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">delta</span> <span class="o">/</span> <span class="n">segment_length</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nb_vertices</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">primary_length</span> <span class="o">/</span> <span class="n">segment_length</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">nb_vertices</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Use primary_length instead&quot;</span><span class="p">)</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">markov</span><span class="o">.</span><span class="n">markov_binary_tree</span><span class="p">(</span>
+        <span class="n">nb_vertices</span><span class="o">=</span><span class="n">nb_vertices</span><span class="p">,</span>
+        <span class="n">branching_variability</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span>
+        <span class="n">branching_delay</span><span class="o">=</span><span class="n">branching_delay</span><span class="p">,</span>
+        <span class="n">length_law</span><span class="o">=</span><span class="n">length_law</span><span class="p">,</span>
+        <span class="n">nude_tip_length</span><span class="o">=</span><span class="n">nb_nude_vertices</span><span class="p">,</span>
+        <span class="n">order_max</span><span class="o">=</span><span class="n">order_max</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="c1"># compute radius property on MTG</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">ordered_radius</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ref_radius</span><span class="o">=</span><span class="n">ref_radius</span><span class="p">,</span> <span class="n">order_decrease_factor</span><span class="o">=</span><span class="n">order_decrease_factor</span><span class="p">)</span>
+
+    <span class="c1"># compute length property and parametrisation</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_length</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_relative_position</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="n">g</span><span class="p">,</span> <span class="n">surface</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_surface</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">volume</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_volume</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">surface</span><span class="p">,</span> <span class="n">volume</span></div>
+
+<div class="viewcode-block" id="hydroroot_flow"><a class="viewcode-back" href="../../user/api_main.html#hydroroot.main.hydroroot_flow">[docs]</a><span class="k">def</span> <span class="nf">hydroroot_flow</span><span class="p">(</span>
+    <span class="n">g</span><span class="p">,</span>
+    <span class="n">segment_length</span><span class="o">=</span><span class="mf">1.e-4</span><span class="p">,</span>
+    <span class="n">k0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">Jv</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">psi_e</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">psi_base</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">axial_conductivity_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">radial_conductivity_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Flux and equivalent conductance calculation</span>
+
+<span class="sd">    :param g: MTG</span>
+<span class="sd">    :param segment_length: Float (Default value = 1.e-4)</span>
+<span class="sd">    :param k0: Float (Default value = 300)</span>
+<span class="sd">    :param Jv: Float (Default value = 0.1)</span>
+<span class="sd">    :param psi_e: Float (Default value = 0.4)</span>
+<span class="sd">    :param psi_base: Float (Default value = 0.1)</span>
+<span class="sd">    :param axial_conductivity_data: list of Float (Default value = None)</span>
+<span class="sd">    :param radial_conductivity_data: list of Float (Default value = None)</span>
+<span class="sd">    :returns: - g (MTG): the MTG with the following properties filled: K (axial conductance), k (radial donductivity),</span>
+<span class="sd">    	        j (radial flux), J_out (axial flux), psi_in and psi_out (hydrostatic pressure into the root at the</span>
+<span class="sd">    	        input and output of a MTG node</span>
+<span class="sd">    	- Keq (float): the equivalent conductance of the whole root</span>
+<span class="sd">    	- Jv_global (float): the outgoing flux at the root base</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xa</span><span class="p">,</span> <span class="n">ya</span> <span class="o">=</span> <span class="n">axial_conductivity_data</span>
+    <span class="c1"># commented line below, BUG correction, the global flux was diverging when decreasing segment_length</span>
+    <span class="c1"># ya was not supposed to be multiplied by (segment_length / 1.e-4)</span>
+    <span class="c1"># ya = list(np.array(ya) * (segment_length / 1.e-4))</span>
+    <span class="n">axial_conductivity_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span> <span class="n">ya</span><span class="p">)</span>
+
+    <span class="n">xr</span><span class="p">,</span> <span class="n">yr</span> <span class="o">=</span> <span class="n">radial_conductivity_data</span>
+    <span class="n">radial_conductivity_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">)</span>
+
+    <span class="c1"># Compute K using axial conductance data</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">fit_property_from_spline</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">axial_conductivity_law</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;K_exp&#39;</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">compute_K</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="c1"># Fabrice 2020-01-17: calculation of K in dimension [L^3 P^(-1) T^(-1)]</span>
+    <span class="c1"># Compute the flux</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">fit_property_from_spline</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">radial_conductivity_law</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;k0&#39;</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">compute_k</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="s1">&#39;k0&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: return Keq base and Jv</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Jv</span><span class="p">,</span> <span class="n">psi_e</span><span class="p">,</span> <span class="n">psi_base</span><span class="p">,</span> <span class="n">invert_model</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">Keqs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s1">&#39;Keq&#39;</span><span class="p">)</span>
+    <span class="n">v_base</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">component_roots_at_scale_iter</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">Keq</span> <span class="o">=</span> <span class="n">Keqs</span><span class="p">[</span><span class="n">v_base</span><span class="p">]</span>
+    <span class="n">Jv_global</span> <span class="o">=</span> <span class="n">Keq</span> <span class="o">*</span> <span class="p">(</span><span class="n">psi_e</span> <span class="o">-</span> <span class="n">psi_base</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">Keq</span><span class="p">,</span> <span class="n">Jv_global</span></div>
+
+
+<div class="viewcode-block" id="hydroroot"><a class="viewcode-back" href="../../user/api_main.html#hydroroot.main.hydroroot">[docs]</a><span class="k">def</span> <span class="nf">hydroroot</span><span class="p">(</span>
+    <span class="n">primary_length</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">delta</span><span class="o">=</span><span class="mf">2.e-3</span><span class="p">,</span>
+    <span class="n">beta</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">order_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">segment_length</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">nude_length</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">ref_radius</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">order_decrease_factor</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">k0</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">Jv</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">psi_e</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">psi_base</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">length_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">axial_conductivity_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">radial_conductivity_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">n</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simulate a root system and compute global conductance and flux.</span>
+<span class="sd">    see :func:`~main.hydroroot_mtg` and  :func:`~main.hydroroot_flow`</span>
+
+<span class="sd">    :param primary_length:  (Default value = 0.15)</span>
+<span class="sd">    :param delta:  (Default value = 2.e-3)</span>
+<span class="sd">    :param beta:  (Default value = 0.25)</span>
+<span class="sd">    :param order_max:  (Default value = 5)</span>
+<span class="sd">    :param segment_length:  (Default value = 1e-4)</span>
+<span class="sd">    :param nude_length:  (Default value = 0.02)</span>
+<span class="sd">    :param seed:  (Default value = 2)</span>
+<span class="sd">    :param ref_radius:  (Default value = 1e-4)</span>
+<span class="sd">    :param order_decrease_factor:  (Default value = 0.7)</span>
+<span class="sd">    :param k0:  (Default value = 300)</span>
+<span class="sd">    :param Jv:  (Default value = 0.1)</span>
+<span class="sd">    :param psi_e:  (Default value = 0.4)</span>
+<span class="sd">    :param psi_base:  (Default value = 0.1)</span>
+<span class="sd">    :param length_data:  (Default value = None)</span>
+<span class="sd">    :param axial_conductivity_data:  (Default value = None)</span>
+<span class="sd">    :param radial_conductivity_data:  (Default value = None)</span>
+<span class="sd">    :param n:  (Default value = None)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">surface</span><span class="p">,</span> <span class="n">volume</span> <span class="o">=</span> <span class="n">hydroroot_mtg</span><span class="p">(</span><span class="n">primary_length</span><span class="o">=</span><span class="n">primary_length</span><span class="p">,</span>
+                                       <span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">,</span>
+                                       <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span>
+                                       <span class="n">order_max</span><span class="o">=</span><span class="n">order_max</span><span class="p">,</span>
+                                       <span class="n">segment_length</span><span class="o">=</span><span class="n">segment_length</span><span class="p">,</span>
+                                       <span class="n">nude_length</span><span class="o">=</span><span class="n">nude_length</span><span class="p">,</span>
+                                       <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                                       <span class="n">ref_radius</span><span class="o">=</span><span class="n">ref_radius</span><span class="p">,</span>
+                                       <span class="n">order_decrease_factor</span><span class="o">=</span><span class="n">order_decrease_factor</span><span class="p">,</span>
+                                       <span class="n">length_data</span><span class="o">=</span><span class="n">length_data</span><span class="p">,</span>
+                                       <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+                                       <span class="p">)</span>
+    <span class="n">xa</span><span class="p">,</span> <span class="n">ya</span> <span class="o">=</span> <span class="n">axial_conductivity_data</span>
+    <span class="c1"># commented line below, BUG correction, the global flux was diverging when decreasing segment_length</span>
+    <span class="c1"># ya was not supposed to be multiplied by (segment_length / 1.e-4)</span>
+    <span class="c1"># ya = list(np.array(ya) * (segment_length / 1.e-4))</span>
+    <span class="n">axial_conductivity_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span> <span class="n">ya</span><span class="p">)</span>
+
+    <span class="n">xr</span><span class="p">,</span> <span class="n">yr</span> <span class="o">=</span> <span class="n">radial_conductivity_data</span>
+    <span class="n">radial_conductivity_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">)</span>
+
+    <span class="c1"># Compute K using axial conductance data</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">fit_property_from_spline</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">axial_conductivity_law</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;K_exp&#39;</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">compute_K</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>  <span class="c1"># Fabrice 2020-01-17: calculation of K in dimension [L^3 P^(-1) T^(-1)]</span>
+    <span class="c1"># Compute the flux</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">fit_property_from_spline</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">radial_conductivity_law</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;k0&#39;</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">compute_k</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="s1">&#39;k0&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: return Keq base and Jv</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Jv</span><span class="p">,</span> <span class="n">psi_e</span><span class="p">,</span> <span class="n">psi_base</span><span class="p">,</span> <span class="n">invert_model</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">Keqs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s1">&#39;Keq&#39;</span><span class="p">)</span>
+    <span class="n">v_base</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">component_roots_at_scale_iter</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">Keq</span> <span class="o">=</span> <span class="n">Keqs</span><span class="p">[</span><span class="n">v_base</span><span class="p">]</span>
+    <span class="n">Jv_global</span> <span class="o">=</span> <span class="n">Keq</span> <span class="o">*</span> <span class="p">(</span><span class="n">psi_e</span> <span class="o">-</span> <span class="n">psi_base</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">surface</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">Keq</span><span class="p">,</span> <span class="n">Jv_global</span></div>
+
+
+<div class="viewcode-block" id="hydroroot_from_data"><a class="viewcode-back" href="../../user/api_main.html#hydroroot.main.hydroroot_from_data">[docs]</a><span class="k">def</span> <span class="nf">hydroroot_from_data</span><span class="p">(</span>
+    <span class="n">primary_length</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">delta</span><span class="o">=</span><span class="mf">2.e-3</span><span class="p">,</span>
+    <span class="n">beta</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">order_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">segment_length</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">nude_length</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">ref_radius</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">order_decrease_factor</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">k0</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="n">Jv</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">psi_e</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">psi_base</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">length_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">axial_conductivity_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">radial_conductivity_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">primary_length_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">lateral_length_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reconstruct a root system and compute global conductance and flux.</span>
+
+<span class="sd">    :param primary_length_data: list Float (Default value = None)</span>
+<span class="sd">    :param lateral_length_data: list Float (Default value = None)</span>
+<span class="sd">    :param return: </span>
+<span class="sd">    :param g: MTG</span>
+<span class="sd">    :param surface: float</span>
+<span class="sd">    :param volume: float</span>
+<span class="sd">    :param Keq: float</span>
+<span class="sd">    :param Jv_global: float</span>
+<span class="sd">    :param see: func</span>
+<span class="sd">    :param primary_length:  (Default value = 0.15)</span>
+<span class="sd">    :param delta:  (Default value = 2.e-3)</span>
+<span class="sd">    :param beta:  (Default value = 0.25)</span>
+<span class="sd">    :param order_max:  (Default value = 5)</span>
+<span class="sd">    :param segment_length:  (Default value = 1e-4)</span>
+<span class="sd">    :param nude_length:  (Default value = 0.02)</span>
+<span class="sd">    :param seed:  (Default value = 2)</span>
+<span class="sd">    :param ref_radius:  (Default value = 1e-4)</span>
+<span class="sd">    :param order_decrease_factor:  (Default value = 0.7)</span>
+<span class="sd">    :param k0:  (Default value = 300)</span>
+<span class="sd">    :param Jv:  (Default value = 0.1)</span>
+<span class="sd">    :param psi_e:  (Default value = 0.4)</span>
+<span class="sd">    :param psi_base:  (Default value = 0.1)</span>
+<span class="sd">    :param length_data:  (Default value = None)</span>
+<span class="sd">    :param axial_conductivity_data:  (Default value = None)</span>
+<span class="sd">    :param radial_conductivity_data:  (Default value = None)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xl</span><span class="p">,</span> <span class="n">yl</span> <span class="o">=</span> <span class="n">length_data</span>
+    <span class="n">length_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xl</span><span class="p">,</span> <span class="n">yl</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">segment_length</span><span class="p">)</span>
+
+    <span class="n">xa</span><span class="p">,</span> <span class="n">ya</span> <span class="o">=</span> <span class="n">axial_conductivity_data</span>
+    <span class="c1"># commented line below, BUG correction, the global flux was diverging when decreasing segment_length</span>
+    <span class="c1"># ya was not supposed to be multiplied by (segment_length / 1.e-4)</span>
+    <span class="c1"># ya = list(np.array(ya) * (segment_length / 1.e-4))</span>
+    <span class="n">axial_conductivity_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xa</span><span class="p">,</span> <span class="n">ya</span><span class="p">)</span>
+
+    <span class="n">xr</span><span class="p">,</span> <span class="n">yr</span> <span class="o">=</span> <span class="n">radial_conductivity_data</span>
+    <span class="n">radial_conductivity_law</span> <span class="o">=</span> <span class="n">fit_law</span><span class="p">(</span><span class="n">xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">)</span>
+
+    <span class="c1"># compute the architecture</span>
+    <span class="n">nb_nude_vertices</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nude_length</span> <span class="o">/</span> <span class="n">segment_length</span><span class="p">)</span>
+    <span class="n">branching_delay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">delta</span> <span class="o">/</span> <span class="n">segment_length</span><span class="p">)</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">measured_root</span><span class="o">.</span><span class="n">mtg_builder</span><span class="p">(</span>
+        <span class="n">primary_length</span><span class="p">,</span>
+        <span class="n">primary_length_data</span><span class="p">,</span>
+        <span class="n">lateral_length_data</span><span class="p">,</span>
+        <span class="n">segment_length</span><span class="o">=</span><span class="n">segment_length</span><span class="p">,</span>
+        <span class="n">branching_variability</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span>
+        <span class="n">branching_delay</span><span class="o">=</span><span class="n">branching_delay</span><span class="p">,</span>
+        <span class="n">length_law</span><span class="o">=</span><span class="n">length_law</span><span class="p">,</span>
+        <span class="n">nude_tip_length</span><span class="o">=</span><span class="n">nb_nude_vertices</span><span class="p">,</span>
+        <span class="n">order_max</span><span class="o">=</span><span class="n">order_max</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+
+    <span class="c1"># compute radius property on MTG</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">ordered_radius</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ref_radius</span><span class="o">=</span><span class="n">ref_radius</span><span class="p">,</span> <span class="n">order_decrease_factor</span><span class="o">=</span><span class="n">order_decrease_factor</span><span class="p">)</span>
+
+    <span class="c1"># compute length property and parametrisation</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_length</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_relative_position</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="c1"># Compute K using axial conductance data</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">fit_property_from_spline</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">axial_conductivity_law</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;K_exp&#39;</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">compute_K</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>  <span class="c1"># Fabrice 2020-01-17: calculation of K in dimension [L^3 P^(-1) T^(-1)]</span>
+
+    <span class="n">g</span><span class="p">,</span> <span class="n">surface</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_surface</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">volume</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_volume</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="c1"># Compute the flux</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">fit_property_from_spline</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">radial_conductivity_law</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="s1">&#39;k0&#39;</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">conductance</span><span class="o">.</span><span class="n">compute_k</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="s1">&#39;k0&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: return Keq base and Jv</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">Jv</span><span class="p">,</span> <span class="n">psi_e</span><span class="p">,</span> <span class="n">psi_base</span><span class="p">,</span> <span class="n">invert_model</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">Keqs</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s1">&#39;Keq&#39;</span><span class="p">)</span>
+    <span class="n">v_base</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">component_roots_at_scale_iter</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">Keq</span> <span class="o">=</span> <span class="n">Keqs</span><span class="p">[</span><span class="n">v_base</span><span class="p">]</span>
+    <span class="n">Jv_global</span> <span class="o">=</span> <span class="n">Keq</span> <span class="o">*</span> <span class="p">(</span><span class="n">psi_e</span> <span class="o">-</span> <span class="n">psi_base</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">surface</span><span class="p">,</span> <span class="n">volume</span><span class="p">,</span> <span class="n">Keq</span><span class="p">,</span> <span class="n">Jv_global</span></div>
+
+<div class="viewcode-block" id="root_builder"><a class="viewcode-back" href="../../user/api_main.html#hydroroot.main.root_builder">[docs]</a><span class="k">def</span> <span class="nf">root_builder</span><span class="p">(</span><span class="n">primary_length</span> <span class="o">=</span> <span class="mf">0.13</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span> <span class="o">=</span> <span class="mf">2.0e-3</span><span class="p">,</span> <span class="n">nude_length</span> <span class="o">=</span> <span class="mf">2.0e-2</span><span class="p">,</span> <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">segment_length</span> <span class="o">=</span> <span class="mf">1.0e-4</span><span class="p">,</span>
+                  <span class="n">length_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">branching_variability</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">order_max</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">order_decrease_factor</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+                  <span class="n">ref_radius</span> <span class="o">=</span> <span class="mf">7.0e-5</span><span class="p">,</span> <span class="n">Flag_radius</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;wrapper function: build a MTG with properties like radius and vertex length set.</span>
+<span class="sd">    The MTG is either generated or built from a data.</span>
+<span class="sd">    The radius and vertex length properties are set.</span>
+<span class="sd">    The following properties are computed: length, position, mylength, surface, volume, total length, primary root length, nb of intercepts</span>
+
+<span class="sd">    :param primary_length: primary root length for generated mtg (Default value = 0.13)</span>
+<span class="sd">    :param seed: seed for generated mtg (Default value = None)</span>
+<span class="sd">    :param delta: branching delay for generated mtg (Default value = 2.0e-3)</span>
+<span class="sd">    :param nude_length: length from tip without lateral for generated mtg (Default value = 2.0e-2)</span>
+<span class="sd">    :param df: pandas DataFrame with the architecture data to be reconstructed (Default value = None)</span>
+<span class="sd">    :param segment_length: float (Default value = 1.0e-4)</span>
+<span class="sd">    :param length_data: string (Default value = None)</span>
+<span class="sd">    :param branching_variability: float (Default value = 0.25)</span>
+<span class="sd">    :param order_max: float (Default value = 4.0)</span>
+<span class="sd">    :param order_decrease_factor: float (Default value = 0.7)</span>
+<span class="sd">    :param ref_radius: float (Default value = 7.0e-5)</span>
+<span class="sd">    :param intercepts: list</span>
+<span class="sd">    :param Flag_radius: boolean (Default value = False)</span>
+<span class="sd">    :returns: - g: MTG with the different properties set or computed (see comments above),</span>
+<span class="sd">        - primary_length: primary root length (output for generated mtg)</span>
+<span class="sd">        - total_length: total root length</span>
+<span class="sd">        - surface: total root surface</span>
+<span class="sd">        - intercepts: nb of intercepts at a given distance from base</span>
+<span class="sd">        - _seed: the seed used in the generator</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">measured_root</span><span class="o">.</span><span class="n">mtg_from_aqua_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">)</span>
+        <span class="n">_seed</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># if no seed just create one</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_seed</span> <span class="o">=</span> <span class="n">markov</span><span class="o">.</span><span class="n">my_seed</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_seed</span> <span class="o">=</span> <span class="n">seed</span>
+
+        <span class="n">g</span> <span class="o">=</span> <span class="n">markov</span><span class="o">.</span><span class="n">generate_g</span><span class="p">(</span><span class="n">_seed</span><span class="p">,</span> <span class="n">length_data</span><span class="p">,</span>
+                       <span class="n">branching_variability</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span>
+                       <span class="n">nude_length</span><span class="p">,</span> <span class="n">primary_length</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">,</span>
+                       <span class="n">order_max</span><span class="p">)</span>
+
+    <span class="c1"># compute radius property on MTG</span>
+    <span class="c1"># F. Bauget 2022-05-17 : added if</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">Flag_radius</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;radius&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">property_names</span><span class="p">()):</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">ordered_radius</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ref_radius</span><span class="p">,</span> <span class="n">order_decrease_factor</span><span class="p">)</span>
+
+    <span class="c1"># compute length property and parametrisation</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_length</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">segment_length</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_relative_position</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="c1"># Calculation of the distance from base of each vertex, used for cut and flow</span>
+    <span class="n">_mylength</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">traversal</span><span class="o">.</span><span class="n">pre_order2</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">pid</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">parent</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">_mylength</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mylength</span><span class="p">[</span><span class="n">pid</span><span class="p">]</span> <span class="o">+</span> <span class="n">segment_length</span> <span class="k">if</span> <span class="n">pid</span> <span class="k">else</span> <span class="n">segment_length</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">properties</span><span class="p">()[</span><span class="s1">&#39;mylength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_mylength</span>
+
+    <span class="c1"># total_length is the total length of the RSA (sum of the length of all the segments)</span>
+    <span class="n">total_length</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">nb_vertices</span><span class="p">(</span><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">segment_length</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">surface</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_surface</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">volume</span> <span class="o">=</span> <span class="n">radius</span><span class="o">.</span><span class="n">compute_volume</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">v_base</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">component_roots_at_scale_iter</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">max_scale</span><span class="p">()))</span>
+        <span class="n">primary_length</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s1">&#39;position&#39;</span><span class="p">)[</span><span class="n">v_base</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">g</span><span class="p">,</span> <span class="n">primary_length</span><span class="p">,</span> <span class="n">total_length</span><span class="p">,</span> <span class="n">surface</span><span class="p">,</span> <span class="n">_seed</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Yann Boursiac, Christophe Pradal, Fabrice Bauget, Mikaël Lucas, Christophe Godin, Christophe Maurel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
