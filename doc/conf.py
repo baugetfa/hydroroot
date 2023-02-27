@@ -12,7 +12,16 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src'))
+# sys.path.insert(0, os.path.abspath('../src'))
+
+# Get the project root dir, which is the parent dir of this
+cwd = os.getcwd()
+project_root = os.path.dirname(cwd)
+
+# Insert the project root dir as the first element in the PYTHONPATH.
+# This lets us ensure that the source package is imported, and that its
+# version is used.
+sys.path.insert(0, os.path.join(project_root, 'src'))
 
 
 # -- Project information -----------------------------------------------------
@@ -22,7 +31,16 @@ copyright = '2022, Yann Boursiac, Christophe Pradal, Fabrice Bauget, Mikaël Luc
 author = 'Christophe Pradal, Yann Boursiac, Fabrice Bauget, Mikael Lucas, Christophe Godin, Christophe Maurel'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.0'
+# release = '1.0.0'
+# find version number in /src/$pkg_pth/version.py
+pkgver = {}
+with open("../src/openalea/mtg/version.py") as fp:
+    exec(fp.read(), pkgver)
+
+# The short X.Y version.
+version = pkgver["__version__"]
+# The full version, including alpha/beta/rc tags.
+release = pkgver["__version__"]
 
 
 # -- General configuration ---------------------------------------------------
@@ -41,6 +59,20 @@ extensions = [
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+
+
+# The suffix of source filenames.
+source_suffix = '.rst'
+
+# The encoding of source files.
+# source_encoding = 'utf-8-sig'
+
+# The master toctree document.
+master_doc = 'index'
+
+# General information about the project.
+project = u'openalea.hydroroot'
+copyright = u'2022, openalea.hydroroot'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
