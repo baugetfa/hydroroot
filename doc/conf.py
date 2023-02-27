@@ -34,7 +34,7 @@ author = 'Christophe Pradal, Yann Boursiac, Fabrice Bauget, Mikael Lucas, Christ
 # release = '1.0.0'
 # find version number in /src/$pkg_pth/version.py
 pkgver = {}
-with open("../src/openalea/hydroroot/version.py") as fp:
+with open("../src/hydroroot/version.py") as fp:
     exec(fp.read(), pkgver)
 
 # The short X.Y version.
