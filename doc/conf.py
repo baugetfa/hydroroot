@@ -92,11 +92,16 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-# If false, no module index is generated.
-html_domain_indices = True
+# # If false, no module index is generated.
+# html_domain_indices = True
 
-# If false, no index is generated.
-html_use_index = True
+# # If false, no index is generated.
+# html_use_index = True
 
-# If true, the index is split into individual pages for each letter.
-html_split_index = False
+# # If true, the index is split into individual pages for each letter.
+# html_split_index = False
+
+# based on openalea.mtg
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'hydrorootdoc'
+autosummary_generate = True
