@@ -614,7 +614,7 @@ def water_solute_model(parameter, df_archi =None, df_law =None,
 
     # Parameter bounds
     Kbnds = (1.0e-10, np.inf)  # axial conductance
-    kbnds = (0.0, np.inf)  # radial conductivity
+    kbnds = (0.001, np.inf)  # radial conductivity
     Jbnds = (1e-15, np.inf)  # Js
     Pbnds = (1e-15, np.inf)  # Ps
 
