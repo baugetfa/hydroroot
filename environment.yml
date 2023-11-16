@@ -69,11 +69,13 @@ dependencies:
   - importlib_resources=6.1.1=pyhd8ed1ab_0
   - ipykernel=6.26.0=pyhf8b6a83_0
   - ipython=8.17.2=pyh41d4057_0
+  - ipywidgets=8.1.1=pyhd8ed1ab_0
   - isoduration=20.11.0=pyhd8ed1ab_0
   - jedi=0.19.1=pyhd8ed1ab_0
   - jinja2=3.1.2=pyhd8ed1ab_1
   - jpeg=9e=h0b41bf4_3
   - json5=0.9.14=pyhd8ed1ab_0
+  - jsonpickle=3.0.2=pyhd8ed1ab_1
   - jsonpointer=2.4=py39hf3d152e_3
   - jsonschema=4.19.2=pyhd8ed1ab_0
   - jsonschema-specifications=2023.11.1=pyhd8ed1ab_0
@@ -87,6 +89,8 @@ dependencies:
   - jupyterlab=4.0.8=pyhd8ed1ab_0
   - jupyterlab_pygments=0.2.2=pyhd8ed1ab_0
   - jupyterlab_server=2.25.1=pyhd8ed1ab_0
+  - jupyterlab_widgets=3.0.9=pyhd8ed1ab_0
+  - k3d=2.16.0=pyhd8ed1ab_0
   - keyutils=1.6.1=h166bdaf_0
   - kiwisolver=1.4.5=py39h7633fee_1
   - krb5=1.20.1=hf9c8cef_0
@@ -137,6 +141,7 @@ dependencies:
   - matplotlib-inline=0.1.6=pyhd8ed1ab_0
   - mistune=3.0.2=pyhd8ed1ab_0
   - mpfr=4.2.1=h9458935_0
+  - msgpack-python=1.0.6=py39h7633fee_0
   - munkres=1.1.4=pyh9f0ad1d_0
   - mysql-common=8.0.32=h14678bc_0
   - mysql-libs=8.0.32=h54cf53e_0
@@ -145,6 +150,7 @@ dependencies:
   - nbformat=5.9.2=pyhd8ed1ab_0
   - ncurses=6.4=h59595ed_2
   - nest-asyncio=1.5.8=pyhd8ed1ab_0
+  - networkx=3.2.1=pyhd8ed1ab_0
   - notebook-shim=0.2.3=pyhd8ed1ab_0
   - nspr=4.35=h27087fc_0
   - nss=3.94=h1d7d5a4_0
@@ -193,6 +199,7 @@ dependencies:
   - python-tzdata=2023.3=pyhd8ed1ab_0
   - python_abi=3.9=4_cp39
   - pytz=2023.3.post1=pyhd8ed1ab_0
+  - pyvis=0.3.1=pyhd8ed1ab_0
   - pyyaml=6.0.1=py39hd1e30aa_1
   - pyzmq=25.1.1=py39h8c080ef_2
   - qhull=2020.2=h4bd325d_2
@@ -217,6 +224,7 @@ dependencies:
   - tomli=2.0.1=pyhd8ed1ab_0
   - tornado=6.3.3=py39hd1e30aa_1
   - traitlets=5.13.0=pyhd8ed1ab_0
+  - traittypes=0.2.1=pyh9f0ad1d_2
   - types-python-dateutil=2.8.19.14=pyhd8ed1ab_0
   - typing-extensions=4.8.0=hd8ed1ab_0
   - typing_extensions=4.8.0=pyha770c72_0
@@ -230,6 +238,7 @@ dependencies:
   - webencodings=0.5.1=pyhd8ed1ab_2
   - websocket-client=1.6.4=pyhd8ed1ab_0
   - wheel=0.41.3=pyhd8ed1ab_0
+  - widgetsnbextension=4.0.9=pyhd8ed1ab_0
   - xorg-fixesproto=5.0=h7f98852_1002
   - xorg-kbproto=1.0.7=h7f98852_1002
   - xorg-libx11=1.8.4=h0b41bf4_0
@@ -245,6 +254,7 @@ dependencies:
   - zlib=1.2.13=hd590300_5
   - zstd=1.5.5=hfc55251_0
   - pip:
+      - oawidgets==1.0.1
       - openalea-deploy==3.0.2
       - openalea-hydroroot==2.0.0
       - openalea-mtg==2.1.2
