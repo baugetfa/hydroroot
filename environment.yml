@@ -235,6 +235,6 @@ dependencies:
   - zeromq=4.3.4=h9c3ff4c_1
   - zipp=3.10.0=pyhd8ed1ab_0
   - zlib=1.2.13=h166bdaf_4
-  - zstd=1.5.2=h6239696_4
+  - zstd
   - oawidgets==1.0.1
   - rsml==1.1.2
