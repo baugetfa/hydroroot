@@ -5,4 +5,4 @@ channels:
   - defaults
 dependencies:
   - openalea.hydroroot
-  - oawidgets
+  - oawidgets=1.0.1
