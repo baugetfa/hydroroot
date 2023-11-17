@@ -150,12 +150,12 @@ class my_UI(object):
         self.wd_archi_int.append(widgets.IntText(description = 'order_max:', value = default_param.archi['order_max'],
                                                  tooltip = 'maximum of lateral order',
                                                  disabled = False, layout = widgets.Layout(width = '200px')))
-        archi_float = [('L PR', default_param.archi['primary_length'][0], 'primary root length', False),
-                       ('LR delay', default_param.archi['branching_delay'][0], 'averaged distance between laterals (m)',
+        archi_float = [('L PR', default_param.archi['primary_length'], 'primary root length', False),
+                       ('LR delay', default_param.archi['branching_delay'], 'averaged distance between laterals (m)',
                         False),
                        ('variability', default_param.archi['branching_variability'],
                         'variability on LR length and delay [0;1]', False),
-                       ('L nude', default_param.archi['nude_length'][0], 'distance from tip without laterals (m)',
+                       ('L nude', default_param.archi['nude_length'], 'distance from tip without laterals (m)',
                         False),
                        (
                            'seg length', default_param.archi['segment_length'], 'representative element length (m)',
@@ -231,8 +231,8 @@ class my_UI(object):
         # **************************
         ### OUTPUT
         # **************************
-        output_float = [('axfold:', default_param.output['axfold'][0], 'factor to explore a K range'),
-                        ('radfold:', default_param.output['radfold'][0], 'factor to explore a k0 range')
+        output_float = [('axfold:', default_param.output['axfold'], 'factor to explore a K range'),
+                        ('radfold:', default_param.output['radfold'], 'factor to explore a k0 range')
                         ]
         self.wd_output_float = [widgets.FloatText(description = n,
                                                   tooltip = t, value = v,
