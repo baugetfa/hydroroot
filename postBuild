@@ -1,0 +1,2 @@
+#!/bin/bash
+mamba install oawidgets -c openalea3
