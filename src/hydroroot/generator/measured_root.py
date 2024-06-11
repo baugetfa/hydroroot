@@ -364,7 +364,7 @@ def add_branching(g, df, ramifs = None, Order = 0, segment_length = 1e-4):
         parent_base = g.node(vid).base_length
 
         if df_order.empty:
-            while len_base - prev_len > 0:
+            while len_base - prev_len > 0: #lateral without children
                 prev_len += segment_length
                 edge_type = '+' if _root_id == vid else '<'
                 if 'radius' in df_order: # F. Bauget 2020-11-02 : added the possibility to set real radii
@@ -397,11 +397,11 @@ def add_branching(g, df, ramifs = None, Order = 0, segment_length = 1e-4):
                     if 'radius' in df_order: # F. Bauget 2020-11-02 : added the possibility to set real radii
                         # r = df_order.iloc[i].radius  # F. Bauget 2022-06-27
                         r_lrII = df_order.radius[i]  # F. Bauget 2022-06-27
-                        p = tuple(['-'.join(map(str, path)), count, 0.])  # 1: PR, count: countieme RL
+                        p = tuple(['-'.join(map(str, path[:2])), count, 0.])  # F. Bauget 2024-06-11: error the tuple must take the 2 1st path term (i.e. order and count at n-1)
                         # ramifs.setdefault(p, []).append((vid, len_lateral, r))  # randomly added, to sort it sorted(ramifs)  # F. Bauget 2022-06-27
                         new_ramifs.setdefault(p, []).append((vid, len_lateral, r_lrII))  # randomly added, to sort it sorted(ramifs)
                     else:
-                        p = tuple(['-'.join(map(str, path)), count])
+                        p = tuple(['-'.join(map(str, path[:2])), count])  # F. Bauget 2024-06-11: error the tuple must take the 2 1st path term (i.e. order and count at n-1)
                         new_ramifs.setdefault(p, []).append((vid, len_lateral))
     return new_ramifs
 
