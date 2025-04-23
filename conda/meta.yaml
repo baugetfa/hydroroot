@@ -1,6 +1,8 @@
+{% set pyproject = load_file_data('../pyproject.toml', from_recipe_dir=True) %}
+
 package:
-  name: openalea.hydroroot
-  version: "2.0.1"
+  name: {{ pyproject["project"]["name"] }}
+  version: {{ GIT_DESCRIBE_TAG  | replace("v", "") }}
 
 source:
   path: ..
@@ -9,32 +11,31 @@ build:
   noarch: python
   preserve_egg_dir: True
   number: 1
-  script: {{PYTHON}} -m pip install .
+  script: {{PYTHON}} -m pip install . -vv
 
 requirements:
   build:
-    - python {{PY_VER}}
-    - setuptools
+    - python
+    {% for dep in pyproject["build-system"]["requires"] %}
+    - {{ dep.lower() }}
+    {% endfor %}
 
   run:
-    - openalea.mtg
-    - openalea.plantgl
-    - openalea.deploy
-    - pandas
-    - matplotlib
-    - numpy
-    - scipy
-    - yaml
-    - pyyaml
-    - rsml
+    - python {{ pyproject["project"]["requires-python"] }}
+    {% for dep in pyproject["project"]["dependencies"] %}
+    - {{ dep.lower() }}
+    {% endfor %}
+    {% for dep in pyproject["tool"]["conda"]["environment"]["dependencies"] %}
+    - {{ dep.lower() }}
+    {% endfor %}
 
 test:
   requires:
     - pytest
-  
+
   imports:
-    - hydroroot
-  
+    - {{ pyproject["project"]["name"] }}
+
   source_files:
     - test/**
     - test/data/**
@@ -43,7 +44,7 @@ test:
     - pytest -v
 
 about:
-  summary: "OpenAlea.HydroRoot is a hydraulic root architecture modelling"
-  license: "cecill-c"
-  license_file: LICENSE.txt
+  summary: {{ pyproject["project"]["description"] }}
+  license: {{ pyproject["project"]["license"] }}
+  home: {{ pyproject["project"]["urls"]["Homepage"] }}
 
