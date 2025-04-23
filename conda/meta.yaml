@@ -34,7 +34,7 @@ test:
     - pytest
 
   imports:
-    - {{ pyproject["project"]["name"] }}
+    - hydroroot
 
   source_files:
     - test/**

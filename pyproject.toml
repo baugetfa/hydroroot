@@ -25,16 +25,12 @@ authors = [
 ]
 description = "OpenAlea.HydroRoot is a hydraulic root architecture modelling and a root architecture system generator package."
 readme = "README.rst"
-#license = "CECILL-C"
-license = {file = "LICENSE.txt"}
+license = "CECILL-C"
+license-files = ["LICEN[CS]E*"]
 requires-python = ">=3.6"
 classifiers = [
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: CeCILL-C License",
-  "Operating System :: OS Independent",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
