@@ -72,7 +72,6 @@ doc = [
   "sphinx-rtd-theme",
   "pydata-sphinx-theme",
   "myst-parser",
-  "sphinx-favicon",
   "nbsphinx",
 ]
 
