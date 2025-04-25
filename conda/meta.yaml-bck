@@ -1,0 +1,49 @@
+package:
+  name: openalea.hydroroot
+  version: "2.0.1"
+
+source:
+  path: ..
+
+build:
+  noarch: python
+  preserve_egg_dir: True
+  number: 1
+  script: {{PYTHON}} -m pip install .
+
+requirements:
+  build:
+    - python {{PY_VER}}
+    - setuptools
+
+  run:
+    - openalea.mtg
+    - openalea.plantgl
+    - openalea.deploy
+    - pandas
+    - matplotlib
+    - numpy
+    - scipy
+    - yaml
+    - pyyaml
+    - rsml
+
+test:
+  requires:
+    - pytest
+  
+  imports:
+    - hydroroot
+  
+  source_files:
+    - test/**
+    - test/data/**
+  commands:
+    - cd test
+    - pytest -v
+
+about:
+  summary: "OpenAlea.HydroRoot is a hydraulic root architecture modelling"
+  license: "cecill-c"
+  license_file: LICENSE.txt
+

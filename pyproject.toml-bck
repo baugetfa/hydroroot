@@ -1,17 +1,7 @@
 # FB 2025-04-14: based on ADEL and hydroshoot, sphinx pkg in environment.yml
 [build-system]
-requires = [
-    "setuptools",
-    "setuptools_scm",
-  ]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-
-# allow openalea to be a namespace package
-[tool.setuptools.packages.find]
-where = ["src"]
-
-# enable dynamic versioning based on git tags
-[tool.setuptools_scm]
 
 [project]
 name = "openalea.hydroroot"
@@ -24,13 +14,16 @@ authors = [
   { name = "Christophe Maurel" },
 ]
 description = "OpenAlea.HydroRoot is a hydraulic root architecture modelling and a root architecture system generator package."
-readme = "README.rst"
-license = "CECILL-C"
-license-files = ["LICEN[CS]E*"]
+#readme = "README.rst"
+license = {file = "LICENSE.txt"}
 requires-python = ">=3.6"
 classifiers = [
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
+  "License :: OSI Approved :: CeCILL-C License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -39,29 +32,14 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering",
 ]
-dynamic = ["version"]
-#version = "2.0.1"
+dynamic = ["readme"]
+version = "2.0.1"
 dependencies = [
     "pandas",
     "matplotlib",
     "numpy",
     "scipy",
     "pyyaml",
-]
-
-
-# section specific to conda-only distributed package (not used by pip yet)
-[conda.environment]
-channels = [
-  "openalea3",
-  "conda-forge"
-]
-dependencies = [
-    "openalea.mtg",
-    "openalea.plantgl",
-    "openalea.deploy",
-    "yaml",
-    "rsml"
 ]
 
 [project.optional-dependencies]
@@ -82,11 +60,11 @@ Homepage = "https://hydroroot.rtfd.io/"
 Discussions = "https://github.com/openalea/hydroroot/discussions"
 Changelog = "https://github.com/openalea/hydroroot/releases"
 
-#[tool.setuptools.dynamic]
-#readme = {file = ["README.rst"]}
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools.package-data]
 "hydroshoot_data" = ["*"]
-
-[project.entry-points."wralea"]
-"hydroroot" = "openalea.hydroroot_wralea"

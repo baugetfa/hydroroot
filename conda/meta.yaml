@@ -25,7 +25,7 @@ requirements:
     {% for dep in pyproject["project"]["dependencies"] %}
     - {{ dep.lower() }}
     {% endfor %}
-    {% for dep in pyproject["tool"]["conda"]["environment"]["dependencies"] %}
+    {% for dep in pyproject["conda"]["environment"]["dependencies"] %}
     - {{ dep.lower() }}
     {% endfor %}
 
