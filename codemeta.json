@@ -1,0 +1,47 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "author": [
+    {
+      "@id": "https://orcid.org/0000-0002-2555-761X",
+      "@type": "Person",
+      "familyName": "Dr. Pradal Christophe"
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-9545-9003",
+      "@type": "Person",
+      "familyName": "Dr. Boursiac Yann"
+    },
+    {
+      "@id": "https://orcid.org/0000-0001-6286-7759",
+      "@type": "Person",
+      "familyName": "Dr. Lucas Mikael"
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-3293-4049",
+      "@type": "Person",
+      "familyName": "Dr. Bauget Fabrice"
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-1202-8460",
+      "@type": "Person",
+      "familyName": "Dr. Godin Christophe"
+    },
+    {
+      "@id": "https://orcid.org/0000-0002-4255-6440",
+      "@type": "Person",
+      "familyName": "Maurel Christophe"
+    }
+  ],
+  "description": "OpenAlea.HydroRoot is a hydraulic root architecture modelling and a root architecture system generator package.",
+  "keywords": [
+    "root",
+    "openalea",
+    "hydraulic",
+    "maize",
+    "arabidopsis",
+    "millet"
+  ],
+  "license": "https://spdx.org/licenses/CECILL-C",
+  "name": "OpenAlea.HydroRoot"
+}
