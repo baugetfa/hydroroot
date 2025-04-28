@@ -12,6 +12,7 @@ where = ["src"]
 
 # enable dynamic versioning based on git tags
 [tool.setuptools_scm]
+# can be empty if no extra settings are needed, presence enables setuptools-scm
 
 [project]
 name = "openalea.hydroroot"
@@ -27,12 +28,11 @@ description = "OpenAlea.HydroRoot is a hydraulic root architecture modelling and
 readme = "README.rst"
 license = "CECILL-C"
 license-files = ["LICEN[CS]E*"]
-requires-python = ">=3.6"
+requires-python = ">=3.0"
 classifiers = [
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -51,7 +51,7 @@ dependencies = [
 
 
 # section specific to conda-only distributed package (not used by pip yet)
-[conda.environment]
+[tool.conda.environment]
 channels = [
   "openalea3",
   "conda-forge"
