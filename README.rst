@@ -54,7 +54,7 @@ Content
 
 The OpenAlea.HydroRoot package contains a root architecture simulation model coupled with a water and solute transport
 solver. It contains a pure hydraulic solver that is solved using resistance network analogy. It also contains a water
-and solute transport solver that is more complex and see the root as continuous medium.
+and solute transport solver that is more complex and see the root as a continuous medium.
 
 Example
 -------
