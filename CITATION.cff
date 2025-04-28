@@ -29,7 +29,8 @@ authors:
     family-names: Godin
     orcid: 'https://orcid.org/0000-0002-1202-8460'
     name-suffix: Christophe
-  - family-names: Maurel
+  - name-particle: Dr.
+    family-names: Maurel
     name-suffix: Christophe
     orcid: 'https://orcid.org/0000-0002-4255-6440'
 abstract: >-
@@ -44,3 +45,38 @@ keywords:
   - arabidopsis
   - millet
 license: CECILL-C
+
+preferred-citation:
+    type: article
+    authors:
+  - family-names: Boursiac
+    name-suffix: Yann
+    orcid: 'https://orcid.org/0000-0002-9545-9003'
+  - family-names: Pradal
+    name-suffix: Christophe
+    email: christophe.pradal@cirad.fr
+    orcid: 'https://orcid.org/0000-0002-2555-761X'
+  - family-names: Bauget
+    name-suffix: Fabrice
+    orcid: 'https://orcid.org/0000-0002-3293-4049'
+  - family-names: Lucas
+    name-suffix: Mikael
+    orcid: 'https://orcid.org/0000-0001-6286-7759'
+  - family-names: Delivorias
+    name-suffix: Stathis
+    orcid: 'https://orcid.org/0000-0003-4443-4022'
+  - family-names: Godin
+    orcid: 'https://orcid.org/0000-0002-1202-8460'
+    name-suffix: Christophe
+  - family-names: Maurel
+    name-suffix: Christophe
+    orcid: 'https://orcid.org/0000-0002-4255-6440'
+
+    title: "Phenotyping and modeling of root hydraulic architecture reveal critical determinants of axial water transport"
+    doi:"10.1093/plphys/kiac281"
+    journal: "Plant Physiology"
+    year: 2022
+    volume: 190
+    issue: 2
+    start: 1289 # First page number
+    end: 1306 # Last page number

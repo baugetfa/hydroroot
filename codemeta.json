@@ -30,7 +30,7 @@
     {
       "@id": "https://orcid.org/0000-0002-4255-6440",
       "@type": "Person",
-      "familyName": "Maurel Christophe"
+      "familyName": "Dr. Maurel Christophe"
     }
   ],
   "description": "OpenAlea.HydroRoot is a hydraulic root architecture modelling and a root architecture system generator package.",
