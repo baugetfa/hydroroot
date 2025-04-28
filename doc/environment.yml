@@ -16,4 +16,4 @@ dependencies:
   - pydata-sphinx-theme
   - pip
   - pip:
-    - -e ..
+    - -e ..[doc]
