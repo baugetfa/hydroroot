@@ -13,6 +13,6 @@ on:
 
 jobs:
   build:
-    uses: openalea/github-action-conda-build/.github/workflows/conda-package-build.yml@main
+    uses: openalea/github-action-conda-build/.github/workflows/conda-package-build.yml@20-python-313-numpy
     secrets:
       anaconda_token: ${{ secrets.ANACONDA_TOKEN }}
