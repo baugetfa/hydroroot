@@ -5,32 +5,38 @@
     {
       "@id": "https://orcid.org/0000-0002-2555-761X",
       "@type": "Person",
-      "familyName": "Dr. Pradal Christophe"
+      "familyName": "Dr. Pradal",
+      "givenName": "Christophe"
     },
     {
       "@id": "https://orcid.org/0000-0002-9545-9003",
       "@type": "Person",
-      "familyName": "Dr. Boursiac Yann"
+      "familyName": "Dr. Boursiac",
+      "givenName": "Yann"
     },
     {
       "@id": "https://orcid.org/0000-0001-6286-7759",
       "@type": "Person",
-      "familyName": "Dr. Lucas Mikael"
+      "familyName": "Dr. Lucas",
+      "givenName": "Mikael"
     },
     {
       "@id": "https://orcid.org/0000-0002-3293-4049",
       "@type": "Person",
-      "familyName": "Dr. Bauget Fabrice"
+      "familyName": "Dr. Bauget",
+      "givenName": "Fabrice"
     },
     {
       "@id": "https://orcid.org/0000-0002-1202-8460",
       "@type": "Person",
-      "familyName": "Dr. Godin Christophe"
+      "familyName": "Dr. Godin",
+      "givenName": "Christophe"
     },
     {
       "@id": "https://orcid.org/0000-0002-4255-6440",
       "@type": "Person",
-      "familyName": "Dr. Maurel Christophe"
+      "familyName": "Dr. Maurel",
+      "givenName": "Christophe"
     }
   ],
   "description": "OpenAlea.HydroRoot is a hydraulic root architecture modelling and a root architecture system generator package.",
