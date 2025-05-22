@@ -4,7 +4,7 @@
 import pandas as pd
 import numpy as np
 
-from openalea.deploy.shared_data import shared_data
+
 
 import random
 
@@ -257,7 +257,3 @@ def plot(g, **kwds):
 if __name__ == '__main__':
 
     g, surface, volume, Keq, Jv_global=run('data/hydroroot-8v1.txt')
-    #files = shared_data(hydroroot, share_path='share', pattern='hydroroot_measured*.txt')
-    #fn = files[-1]
-
-    #g, surface, volume, Keq, Jv_global= run(fn)
