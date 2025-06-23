@@ -3,10 +3,10 @@ import math
 import sys
 sys.path.insert(0, '../src')
 
-from hydroroot.conductance import set_conductances
-from hydroroot.main import root_builder, flux
-from hydroroot.init_parameter import Parameters
-from hydroroot.water_solute_transport import viscosity_peg, osmotic_p_peg, derivative_viscosity_peg, \
+from openalea.hydroroot.conductance import set_conductances
+from openalea.hydroroot.main import root_builder, flux
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.water_solute_transport import viscosity_peg, osmotic_p_peg, derivative_viscosity_peg, \
     derivative_osmotic_p_peg, pressure_calculation, init_some_MTG_properties, pressure_calculation_no_non_permeating_solutes
 
 def test_viscosity_etc():

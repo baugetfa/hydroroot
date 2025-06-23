@@ -20,9 +20,9 @@ import pandas as pd
 import time
 import argparse
 
-from hydroroot.conductance import radial
-from hydroroot.main import hydroroot_flow, root_builder
-from hydroroot.init_parameter import Parameters
+from openalea.hydroroot.conductance import radial
+from openalea.hydroroot.main import hydroroot_flow, root_builder
+from openalea.hydroroot.init_parameter import Parameters
 
 results = {}
 

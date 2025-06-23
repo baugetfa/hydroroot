@@ -18,10 +18,10 @@ import openalea.plantgl.all as pgl
 from openalea.mtg.algo import axis
 from IPython.display import Image, display
 
-from hydroroot.main import hydroroot_flow, root_builder
-from hydroroot.init_parameter import Parameters
-from hydroroot.display import plot
-from hydroroot.conductance import axial, radial
+from openalea.hydroroot.main import hydroroot_flow, root_builder
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.display import plot
+from openalea.hydroroot.conductance import axial, radial
 
 results = {}
 

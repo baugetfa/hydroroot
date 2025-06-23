@@ -32,11 +32,11 @@ import sys
 
 from openalea.mtg import traversal
 
-from hydroroot import radius
-from hydroroot.main import hydroroot_flow
-from hydroroot.init_parameter import Parameters  # import work in progress for reading init file
-from hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
-from hydroroot.conductance import radial, axial
+from openalea.hydroroot import radius
+from openalea.hydroroot.main import hydroroot_flow
+from openalea.hydroroot.init_parameter import Parameters  # import work in progress for reading init file
+from openalea.hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
+from openalea.hydroroot.conductance import radial, axial
 
 
 parameter = Parameters()

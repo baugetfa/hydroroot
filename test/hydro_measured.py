@@ -12,10 +12,10 @@ from openalea.mtg import MTG, fat_mtg
 from openalea.mtg.traversal import post_order2
 from openalea.mtg import algo
 
-import hydroroot
-from hydroroot.length import fit_law
-from hydroroot import radius, flux, conductance 
-from hydroroot.generator import markov, measured_root # 21-12-14: FB __init__.py in src not doing job
+import openalea.hydroroot
+from openalea.hydroroot.length import fit_law
+from openalea.hydroroot import radius, flux, conductance 
+from openalea.hydroroot.generator import markov, measured_root # 21-12-14: FB __init__.py in src not doing job
 
 
 
@@ -246,7 +246,7 @@ def plot(g, **kwds):
         ipython.magic('gui qt')
 
     from openalea.plantgl.all import Viewer
-    from hydroroot.display import plot as _plot
+    from openalea.hydroroot.display import plot as _plot
 
 
 

@@ -7,7 +7,7 @@ from openalea.mtg.traversal import *
 
 from rsml import continuous, io
 
-from hydroroot import display
+from openalea.hydroroot import display
 
 
 

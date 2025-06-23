@@ -1,15 +1,15 @@
 """ Test architectural model built from data.
 
 """
-from hydroroot.data import data_dir
+from openalea.hydroroot.data import data_dir
 import pandas
 
 import sys
 sys.path.insert(0, '../src')
 
-import hydroroot
-from hydroroot.main import hydroroot_from_data
-from hydroroot.generator.measured_root import mtg_from_aqua_data # Added F. Bauget 2019-12-16
+import openalea.hydroroot
+from openalea.hydroroot.main import hydroroot_from_data
+from openalea.hydroroot.generator.measured_root import mtg_from_aqua_data # Added F. Bauget 2019-12-16
 
 from openalea.mtg.traversal import pre_order2
 

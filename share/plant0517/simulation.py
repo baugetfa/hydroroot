@@ -19,12 +19,12 @@ import pylab
 from openalea.deploy.shared_data import shared_data
 from openalea.plantgl.all import Viewer
 
-import hydroroot
-from hydroroot import display, length
-from hydroroot.law import histo_relative_law, reference_relative_law
-from hydroroot import radius, markov, flux, conductance, measured_root
-from hydroroot.main import hydroroot_flow
-from hydroroot.analysis import intercept
+import openalea.hydroroot
+from openalea.hydroroot import display, length
+from openalea.hydroroot.law import histo_relative_law, reference_relative_law
+from openalea.hydroroot import radius, markov, flux, conductance, measured_root
+from openalea.hydroroot.main import hydroroot_flow
+from openalea.hydroroot.analysis import intercept
 
 #%gui qt
 #%matplotlib qt
@@ -143,7 +143,7 @@ def plot(g, **kwds):
         ipython.magic('gui qt')
 
     from openalea.plantgl.all import Viewer
-    from hydroroot.display import plot as _plot
+    from openalea.hydroroot.display import plot as _plot
 
     Viewer.display(_plot(g, **kwds))
 

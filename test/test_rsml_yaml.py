@@ -5,10 +5,10 @@ from openalea.mtg import MTG, traversal
 import sys
 sys.path.insert(0, '../src')
 
-from hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
-from hydroroot import radius
-from hydroroot.init_parameter import Parameters
-from hydroroot.main import root_builder
+from openalea.hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
+from openalea.hydroroot import radius
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.main import root_builder
 
 def closed(delta, eps=1e-14, txt=''):
     if not txt:

@@ -7,7 +7,7 @@ from os import urandom as _urandom
 from openalea.mtg import *
 from openalea.mtg import algo
 from openalea.mtg import traversal
-from hydroroot.law import length_law
+from openalea.hydroroot.law import length_law
 #from random import choice
 
 def my_seed():

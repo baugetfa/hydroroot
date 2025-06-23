@@ -8,12 +8,12 @@ from matplotlib.colors import Normalize, LogNorm
 
 from openalea.mtg import turtle as turt
 import openalea.plantgl.all as pgl
-from hydroroot.data import data_dir
+from openalea.hydroroot.data import data_dir
 
-import hydroroot
-from hydroroot.flux import *
-from hydroroot import radius, conductance, markov, display
-from hydroroot.read_file import readCSVFile
+import openalea.hydroroot
+from openalea.hydroroot.flux import *
+from openalea.hydroroot import radius, conductance, markov, display
+from openalea.hydroroot.read_file import readCSVFile
 
 def compute_flux(g, n=300, psi_e=400000., psi_base=101325., Jv=1e-10, k0=0.3e-12, length=1e-4):
     k0 = float(k0)

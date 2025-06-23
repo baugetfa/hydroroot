@@ -2,8 +2,8 @@
 import sys
 sys.path.insert(0, '../src')
 
-from hydroroot.main import hydroroot as hydro
-from hydroroot import flux
+from openalea.hydroroot.main import hydroroot as hydro
+from openalea.hydroroot import flux
 
 
 def data():
@@ -118,7 +118,7 @@ def test_flux1():
     check_radial_flow_conservation(g)
     check_vertex_flow_conservation(g)
 
-    return g, surface, volume, Keq, Jv_global
+    # assert g, surface, volume, Keq, Jv_global
 
 
 def test_cut():

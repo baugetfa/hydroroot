@@ -1,7 +1,7 @@
 import numpy as np
 
 from openalea.mtg import *
-from hydroroot import display
+from openalea.hydroroot import display
 from path import Path
 from rsml.continuous import toporder
 

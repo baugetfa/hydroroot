@@ -13,10 +13,10 @@ import sys
 
 import pandas as pd
 
-from hydroroot.main import hydroroot_flow, root_builder
-from hydroroot.init_parameter import Parameters
-from hydroroot.conductance import radial, axial
-from hydroroot.read_file import read_archi_data
+from openalea.hydroroot.main import hydroroot_flow, root_builder
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.conductance import radial, axial
+from openalea.hydroroot.read_file import read_archi_data
 
 ################################################
 # get the model parameters, the length laws are
