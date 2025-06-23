@@ -1,7 +1,4 @@
 
-import sys
-sys.path.insert(0, '../src')
-
 from openalea.hydroroot.main import hydroroot as hydro
 from openalea.hydroroot import flux
 

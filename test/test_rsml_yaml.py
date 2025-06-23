@@ -2,9 +2,6 @@
 import rsml
 from openalea.mtg import MTG, traversal
 
-import sys
-sys.path.insert(0, '../src')
-
 from openalea.hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
 from openalea.hydroroot import radius
 from openalea.hydroroot.init_parameter import Parameters

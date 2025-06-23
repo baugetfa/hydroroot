@@ -4,9 +4,6 @@
 from openalea.hydroroot.data import data_dir
 import pandas
 
-import sys
-sys.path.insert(0, '../src')
-
 import openalea.hydroroot
 from openalea.hydroroot.main import hydroroot_from_data
 from openalea.hydroroot.generator.measured_root import mtg_from_aqua_data # Added F. Bauget 2019-12-16

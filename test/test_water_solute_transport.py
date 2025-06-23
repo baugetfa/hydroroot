@@ -1,8 +1,5 @@
 import math
 
-import sys
-sys.path.insert(0, '../src')
-
 from openalea.hydroroot.conductance import set_conductances
 from openalea.hydroroot.main import root_builder, flux
 from openalea.hydroroot.init_parameter import Parameters
