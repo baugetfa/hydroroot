@@ -14,8 +14,8 @@ Build a root and display it in the PlantGL viewer.
 
 .. code-block:: python
 
-    from hydroroot.main import root_builder
-    from hydroroot.display import plot
+    from openalea.hydroroot.main import root_builder
+    from openalea.hydroroot.display import plot
     %gui qt
     g, primary_length, total_length, surface, seed = root_builder(order_max=1)
     plot(g)
@@ -29,8 +29,8 @@ versus distance to tip (m), respectively.
 
 .. code-block:: python
 
-    from hydroroot.main import hydroroot
-    from hydroroot.display import plot
+    from openalea.hydroroot.main import hydroroot
+    from openalea.hydroroot.display import plot
     K = ([0,0.2],[0.0,1.0e-2])
     k = ([0.0,0.2],[300.0,300.0])
     g, surface, volume, Keq, Jv_global = hydroroot(axial_conductivity_data = K, radial_conductivity_data=k, order_max = 1)

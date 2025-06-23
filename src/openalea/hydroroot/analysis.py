@@ -3,7 +3,7 @@
 Define a set of methods to ease the analysis and simulation.
 """
 import pandas
-# from hydroroot.main import hydroroot
+# from openalea.hydroroot.main import hydroroot
 from openalea.mtg.traversal import pre_order2
 from openalea.mtg.algo import orders
 

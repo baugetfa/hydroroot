@@ -164,5 +164,5 @@ if __name__ == '__main__':
     print('difference in: primary_length, _length, surface, Keq, Jv are:', primary_length-primary_length2, _length-_length2, surface-surface2, Keq-Keq2, Jv-Jv2)
 
     ### use plot() to display g and g2
-    # from hydroroot.display import plot
+    # from openalea.hydroroot.display import plot
     # plot(g)
