@@ -1,25 +1,22 @@
 """ Test architectural model built from data.
 
 """
-from openalea.deploy.shared_data import shared_data
+from openalea.hydroroot.data import data_dir
 import pandas
 
-import sys
-sys.path.insert(0, '../src')
-
-import hydroroot
-from hydroroot.main import hydroroot_from_data
-from hydroroot.generator.measured_root import mtg_from_aqua_data # Added F. Bauget 2019-12-16
+import openalea.hydroroot
+from openalea.hydroroot.main import hydroroot_from_data
+from openalea.hydroroot.generator.measured_root import mtg_from_aqua_data # Added F. Bauget 2019-12-16
 
 from openalea.mtg.traversal import pre_order2
 
 def deprecated_test_archi_data(plant_id=8):
     # FB 25-04-16: hydroroot_from_data is deprecated and parameters like primary_length_data
     # and lateral_length_data also.
-    share = shared_data(hydroroot, share_path='share')
+
     #data = (share/'plants').glob('length*.csv')[1:]
     filename = 'length%d.csv'%plant_id
-    data = [share/'plants0216'/filename]
+    data = [data_dir/'plants0216'/filename]
 
 
     def read_data(data=data):

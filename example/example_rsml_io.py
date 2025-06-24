@@ -32,11 +32,11 @@ import sys
 
 from openalea.mtg import traversal
 
-from hydroroot import radius
-from hydroroot.main import hydroroot_flow
-from hydroroot.init_parameter import Parameters  # import work in progress for reading init file
-from hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
-from hydroroot.conductance import radial, axial
+from openalea.hydroroot import radius
+from openalea.hydroroot.main import hydroroot_flow
+from openalea.hydroroot.init_parameter import Parameters  # import work in progress for reading init file
+from openalea.hydroroot.hydro_io import export_mtg_to_rsml, import_rsml_to_discrete_mtg
+from openalea.hydroroot.conductance import radial, axial
 
 
 parameter = Parameters()
@@ -164,5 +164,5 @@ if __name__ == '__main__':
     print('difference in: primary_length, _length, surface, Keq, Jv are:', primary_length-primary_length2, _length-_length2, surface-surface2, Keq-Keq2, Jv-Jv2)
 
     ### use plot() to display g and g2
-    # from hydroroot.display import plot
+    # from openalea.hydroroot.display import plot
     # plot(g)

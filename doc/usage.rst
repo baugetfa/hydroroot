@@ -52,9 +52,9 @@ The following lines present a small example of calculation of the sap flux from 
 
 .. code-block:: python
 
-    from hydroroot.display import plot
-    from hydroroot.read_file import read_archi_data
-    from hydroroot.main import hydroroot_flow, root_builder
+    from openalea.hydroroot.display import plot
+    from openalea.hydroroot.read_file import read_archi_data
+    from openalea.hydroroot.main import hydroroot_flow, root_builder
 
 Reading the file architecture as a DataFrame
 
@@ -126,10 +126,10 @@ arabidopsis-simple example http://rootsystemml.github.io/images/examples/arabido
 .. code-block:: python
 
     import rsml
-    from hydroroot import radius
-    from hydroroot.main import hydroroot_flow
-    from hydroroot.display import plot
-    from hydroroot.hydro_io import import_rsml_to_discrete_mtg, export_mtg_to_rsml
+    from openalea.hydroroot import radius
+    from openalea.hydroroot.main import hydroroot_flow
+    from openalea.hydroroot.display import plot
+    from openalea.hydroroot.hydro_io import import_rsml_to_discrete_mtg, export_mtg_to_rsml
 
 We first read the RSML file and convert it into a *continuous* MTG. This is a MTG where each root (primary and lateral)
 is represented by one vertex. The geometry of each root is then stored in g_c.property(‘geometry’).
@@ -218,8 +218,8 @@ If the examples are run using the source, add the source directory to the system
 .. code-block:: python
 
     import pandas 
-    from hydroroot.main import root_builder, hydroroot_flow
-    from hydroroot.display import plot
+    from openalea.hydroroot.main import root_builder, hydroroot_flow
+    from openalea.hydroroot.display import plot
 
 The Hydroroot generator of architecture is described in Boursiac et al. [boursiac2022]_.
 It uses length distribution law for laterals, specific to a given species, to generate realistic architecture. Here we use the length laws determined for Col0 arabidopsis.
@@ -401,12 +401,12 @@ The corresponding notebook is *example/example_parameter_class.ipynb*
 .. code-block:: python
 
     import pandas as pd
-    from hydroroot import radius
-    from hydroroot.main import hydroroot_flow, root_builder
-    from hydroroot.init_parameter import Parameters
-    from hydroroot.generator.measured_root import mtg_from_aqua_data
-    from hydroroot.display import plot
-    from hydroroot.read_file import read_archi_data
+    from openalea.hydroroot import radius
+    from openalea.hydroroot.main import hydroroot_flow, root_builder
+    from openalea.hydroroot.init_parameter import Parameters
+    from openalea.hydroroot.generator.measured_root import mtg_from_aqua_data
+    from openalea.hydroroot.display import plot
+    from openalea.hydroroot.read_file import read_archi_data
     
     # for the PlantGL viewer used in hydroroot.display.plot
     %gui qt 
@@ -488,13 +488,13 @@ Example
 .. code-block:: python
 
     import math
-    from hydroroot import flux
-    from hydroroot.main import root_builder
-    from hydroroot.init_parameter import Parameters
-    from hydroroot.display import plot
-    from hydroroot.read_file import read_archi_data
-    from hydroroot.conductance import set_conductances
-    from hydroroot.water_solute_transport import pressure_calculation_no_non_permeating_solutes, init_some_MTG_properties
+    from openalea.hydroroot import flux
+    from openalea.hydroroot.main import root_builder
+    from openalea.hydroroot.init_parameter import Parameters
+    from openalea.hydroroot.display import plot
+    from openalea.hydroroot.read_file import read_archi_data
+    from openalea.hydroroot.conductance import set_conductances
+    from openalea.hydroroot.water_solute_transport import pressure_calculation_no_non_permeating_solutes, init_some_MTG_properties
     
     # for the PlantGL viewer used in hydroroot.display.plot
     %gui qt 

@@ -14,13 +14,13 @@ import tempfile, os
 import openalea.plantgl.all as pgl
 from IPython.display import Image, display
 
-from hydroroot.main import hydroroot_flow
-from hydroroot.init_parameter import Parameters
-from hydroroot.display import plot
-from hydroroot import radius
-from hydroroot.conductance import axial, radial_step
-from hydroroot.read_file import read_archi_data
-from hydroroot.generator.measured_root import mtg_from_aqua_data
+from openalea.hydroroot.main import hydroroot_flow
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.display import plot
+from openalea.hydroroot import radius
+from openalea.hydroroot.conductance import axial, radial_step
+from openalea.hydroroot.read_file import read_archi_data
+from openalea.hydroroot.generator.measured_root import mtg_from_aqua_data
 
 
 parameter = Parameters()

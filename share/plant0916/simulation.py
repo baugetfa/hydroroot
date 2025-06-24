@@ -19,12 +19,12 @@ import pylab
 from openalea.deploy.shared_data import shared_data
 from openalea.plantgl.all import Viewer
 
-import hydroroot
-from hydroroot import display
-from hydroroot.law import histo_relative_law
-from hydroroot import radius, markov, flux, conductance, measured_root
-from hydroroot.main import hydroroot_flow
-from hydroroot.analysis import intercept
+import openalea.hydroroot
+from openalea.hydroroot import display
+from openalea.hydroroot.law import histo_relative_law
+from openalea.hydroroot import radius, markov, flux, conductance, measured_root
+from openalea.hydroroot.main import hydroroot_flow
+from openalea.hydroroot.analysis import intercept
 
 #%gui qt
 #%matplotlib qt

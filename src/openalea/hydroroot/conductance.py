@@ -7,7 +7,7 @@ from openalea.mtg import *
 import numpy as np
 from scipy.interpolate import UnivariateSpline
 import pylab
-from hydroroot.length import fit_law
+from openalea.hydroroot.length import fit_law
 
 def setting_k0_according_to_order(g, k0_pr, k0_lr):
     """

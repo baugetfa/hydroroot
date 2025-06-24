@@ -5,9 +5,9 @@ from warnings import warn
 
 from openalea.mtg import traversal
 
-from hydroroot.length import fit_law
-from hydroroot import radius, flux, conductance 
-from hydroroot.generator import markov, measured_root # 21-12-14: FB __init__.py in src not doing job
+from openalea.hydroroot.length import fit_law
+from openalea.hydroroot import radius, flux, conductance 
+from openalea.hydroroot.generator import markov, measured_root # 21-12-14: FB __init__.py in src not doing job
 
 
 def hydroroot_mtg(

@@ -13,9 +13,9 @@ import matplotlib.pyplot as plt
 import argparse
 import time
 
-from hydroroot.main import hydroroot_flow, root_builder
-from hydroroot.init_parameter import Parameters
-from hydroroot.conductance import axial, radial
+from openalea.hydroroot.main import hydroroot_flow, root_builder
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.conductance import axial, radial
 
 
 

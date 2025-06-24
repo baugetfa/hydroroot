@@ -18,12 +18,12 @@ import openalea.plantgl.all as pgl
 from openalea.mtg import turtle as turt
 from IPython.display import Image, display
 
-from hydroroot.init_parameter import Parameters
-from hydroroot.display import get_root_visitor
-from hydroroot import radius
-from hydroroot.read_file import read_archi_data
-from hydroroot.generator.markov import generate_g
-from hydroroot.generator.measured_root import mtg_from_aqua_data
+from openalea.hydroroot.init_parameter import Parameters
+from openalea.hydroroot.display import get_root_visitor
+from openalea.hydroroot import radius
+from openalea.hydroroot.read_file import read_archi_data
+from openalea.hydroroot.generator.markov import generate_g
+from openalea.hydroroot.generator.measured_root import mtg_from_aqua_data
 
 results = {}
 Jv_global = 1.0

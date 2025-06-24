@@ -8,12 +8,12 @@ from matplotlib.colors import Normalize, LogNorm
 
 from openalea.mtg import turtle as turt
 import openalea.plantgl.all as pgl
-from openalea.deploy.shared_data import shared_data
+from openalea.hydroroot.data import data_dir
 
-import hydroroot
-from hydroroot.flux import *
-from hydroroot import radius, conductance, markov, display
-from hydroroot.read_file import readCSVFile
+import openalea.hydroroot
+from openalea.hydroroot.flux import *
+from openalea.hydroroot import radius, conductance, markov, display
+from openalea.hydroroot.read_file import readCSVFile
 
 def compute_flux(g, n=300, psi_e=400000., psi_base=101325., Jv=1e-10, k0=0.3e-12, length=1e-4):
     k0 = float(k0)
@@ -36,7 +36,7 @@ def compute_flux(g, n=300, psi_e=400000., psi_base=101325., Jv=1e-10, k0=0.3e-12
     return g
 
 def compute_conductance(g, fn='conductance_data.csv'):
-    fn = shared_data(hydroroot, fn, share_path='share')
+    fn = data_dir/fn
     data = readCSVFile(fn)
     g = conductance.fit_property_from_csv(g, data, 'position', 'K', k=1)
     return g

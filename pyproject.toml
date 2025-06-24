@@ -59,7 +59,6 @@ channels = [
 dependencies = [
     "openalea.mtg",
     "openalea.plantgl",
-    "openalea.deploy",
     "yaml",
     "rsml"
 ]

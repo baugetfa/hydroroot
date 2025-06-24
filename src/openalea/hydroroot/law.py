@@ -12,7 +12,7 @@ import random
 import numpy as np
 import pylab
 
-from hydroroot import length
+from openalea.hydroroot import length
 
 
 def expovariate_law(data_xy, size=5e-2, scale_x=1e-2, scale_y=1e3, plot=False):
