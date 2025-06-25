@@ -1,8 +1,8 @@
-.. currentmodule:: hydroroot.flux
+.. currentmodule:: openalea.hydroroot.flux
 
 flux
 ===============================================
-.. automodule:: hydroroot.flux
+.. automodule:: openalea.hydroroot.flux
     :members:
     :exclude-members: RadialShuntFlux
     :undoc-members:
@@ -10,5 +10,5 @@ flux
     :show-inheritance:
     :synopsis: Flux computation
 
-Download the source file :download:`../../src/hydroroot/flux.py`.
+Download the source file :download:`../../src/openalea/hydroroot/flux.py`.
 

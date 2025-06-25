@@ -7,13 +7,14 @@ Welcome to HydroRoot's documentation!
 =====================================
 
 .. toctree::
-      :maxdepth: 4
+      :maxdepth: 2
       :caption: Contents:
 
       installation.rst
       quick-start.rst
+      notebook_examples.rst
       usage.rst
-      modeling_principles.rst
+      modeling.rst
       api.rst
       references.rst
 

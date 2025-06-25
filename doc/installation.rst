@@ -2,7 +2,7 @@
 Installation
 ============
 
-First install miniconda following the instructions given here https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
+First install miniforge following the instructions given here https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html
 
 User installation
 ---------------------
@@ -11,8 +11,8 @@ HydroRoot may by installed simply on a conda environments:
 
 ::
 
-    conda create -n hydroroot -c conda-forge -c openalea3 openalea.hydroroot
-    conda activate hydroroot
+    mamba create -n hydroroot -c conda-forge -c openalea3 openalea.hydroroot
+    mamba activate hydroroot
 
 That creates a conda environment called *hydroroot*, install in it *openalea.hydroroot* with all the dependencies and
 activate the environment. Then just open an Ipython session and enjoy.
