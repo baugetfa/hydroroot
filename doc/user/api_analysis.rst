@@ -1,8 +1,8 @@
-.. currentmodule:: hydroroot.analysis
+.. currentmodule:: openalea.hydroroot.analysis
 
 analysis API
 ===============================================
-.. automodule:: hydroroot.analysis
+.. automodule:: openalea.hydroroot.analysis
     :members:
     :exclude-members: read_data
     :undoc-members:
@@ -10,5 +10,5 @@ analysis API
     :show-inheritance:
     :synopsis: Define a set of methods to ease the analysis and simulation
 
-Download the source file :download:`../../src/hydroroot/analysis.py`.
+Download the source file :download:`../../src/openalea/hydroroot/analysis.py`.
 

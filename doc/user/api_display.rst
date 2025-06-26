@@ -1,8 +1,8 @@
-.. currentmodule:: hydroroot.display
+.. currentmodule:: openalea.hydroroot.display
 
 display
 ===============================================
-.. automodule:: hydroroot.display
+.. automodule:: openalea.hydroroot.display
     :members:
     :exclude-members: my_colormap_old, plot_old, my_colorbar_old
     :undoc-members:
@@ -10,5 +10,5 @@ display
     :show-inheritance:
     :synopsis: Some plotting functions
 
-Download the source file :download:`../../src/hydroroot/display.py`.
+Download the source file :download:`../../src/openalea/hydroroot/display.py`.
 

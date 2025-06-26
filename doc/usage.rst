@@ -2,7 +2,7 @@
 Usage
 =====
 
-Many examples are given in the notebook *example\boursiac2022.ipynb* that reproduces most of the figures and tables of Boursiac et al. [boursiac2022]_.
+Many examples are given in the notebook *example/boursiac2022.ipynb* that reproduces most of the figures and tables of Boursiac et al. [boursiac2022]_.
 
 Run calculation on a given architecture
 ---------------------------------------
@@ -44,7 +44,7 @@ If the package HydroRoot is not installed, the following examples can be run by 
 .. code-block:: python
 
     import sys
-    sys.path.extend(['../src']) # if run from the example folder for instance
+    sys.path.extend(['src']) # if run from the example folder for instance
 
 assuming the dependencies installed.
 
@@ -213,7 +213,7 @@ If the examples are run using the source, add the source directory to the system
 .. code-block:: python
 
     import sys;
-    sys.path.extend(['../src'])
+    sys.path.extend(['src'])
 
 .. code-block:: python
 
@@ -284,8 +284,8 @@ Display the local water uptake heatmap in 3D
 Model parameters
 ----------------
 
-The main model parameters are grouped in the python class parameters, see :class:`hydroroot.init_parameter.Parameters`.
-The parameters may be passed to the class by reading a yaml file, see :meth:`hydroroot.init_parameter.Parameters.read_file`.
+The main model parameters are grouped in the python class parameters, see :class:`openalea.hydroroot.init_parameter.Parameters`.
+The parameters may be passed to the class by reading a yaml file, see :meth:`openalea.hydroroot.init_parameter.Parameters.read_file`.
 
 There are two solvers in HydroRoot project. The first, used for the paper Boursiac et al. 2022 [boursiac2022]_, is a purely water transport model. The second is a solute and water transport model. Therefore, the *solute* category in the yaml file has meaning only for the second solver.
 
@@ -389,7 +389,7 @@ The corresponding notebook is *example/example_parameter_class.ipynb*
 .. code-block:: python
 
     import sys; print('Python %s on %s' % (sys.version, sys.platform))
-    sys.path.extend(['../src'])
+    sys.path.extend(['src'])
 
 
 .. parsed-literal::
@@ -476,7 +476,7 @@ Example
 .. code-block:: python
 
     import sys; print('Python %s on %s' % (sys.version, sys.platform))
-    sys.path.extend(['../src'])
+    sys.path.extend(['src'])
 
 
 .. parsed-literal::

@@ -1,8 +1,8 @@
-.. currentmodule:: hydroroot.conductance
+.. currentmodule:: openalea.hydroroot.conductance
 
 conductance
 ===============================================
-.. automodule:: hydroroot.conductance
+.. automodule:: openalea.hydroroot.conductance
     :members:
     :exclude-members: compute_K_from_Poiseuille, compute_K_from_laws, fit_K, fit_property, fit_property_from_csv
     :undoc-members:
@@ -10,5 +10,5 @@ conductance
     :show-inheritance:
     :synopsis: Axial or radial conductance calculation
 
-Download the source file :download:`../../src/hydroroot/conductance.py`.
+Download the source file :download:`../../src/openalea/hydroroot/conductance.py`.
 
