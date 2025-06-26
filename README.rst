@@ -78,7 +78,6 @@ Requirements
 
     * openalea.mtg
     * openalea.plantgl
-    * openalea.visualea
     * RSML
     * pandas > 0.17
     * numpy
@@ -86,10 +85,8 @@ Requirements
 
 Usage
 +++++
-::
 
-    see the jupyter notebook figures_tables.ipynb for examples. This notebook is aimed to run different simulations to
-    generate figures and tables illustrating the HydroRoot capabilities.
+See notebook in example directory.
 
 Documentation
 ~~~~~~~~~~~~~
