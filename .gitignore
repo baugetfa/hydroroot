@@ -71,3 +71,6 @@ nosetests.xml
 
 # Mac OS
 .DS_Store
+
+# Doc build
+doc/_build
