@@ -59,6 +59,7 @@ channels = [
 dependencies = [
     "openalea.mtg",
     "openalea.plantgl",
+    "oawidgets",
     "yaml",
     "rsml"
 ]
@@ -72,7 +73,6 @@ doc = [
   "pydata-sphinx-theme",
   "myst-parser",
   "nbsphinx",
-  "sphinx-copybutton",
 ]
 
 [project.urls]

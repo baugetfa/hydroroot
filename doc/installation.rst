@@ -28,13 +28,12 @@ Developer installation
 
 First fork the git repository (https://github.com/openalea/hydroroot) and clone it locally see https://docs.github.com/en/get-started/quickstart/fork-a-repo.
 
-Create a conda environment with the proper dependencies and activate the environment
+Just run the following command:
 
 ::
 
-    conda create -n hydroroot -c conda-forge -c openalea3 openalea.deploy openalea.mtg openalea.plantgl pandas matplotlib numpy scipy yaml pyyaml rsml
-    conda activate hydroroot
+    mamba create -f conda/environment.yml
+    mamba activate hydroroot
 
-That creates a conda environment called *hydroroot*, install all the dependencies and activates the environment.
-
-They open an Ipython session, source to the src directory of your cloned project and enjoy.
+This will create a conda environment called *hydroroot* with the proper dependencies and
+will install openalea.hydroroot with `pip install -e` the develop mode. The second command activate the environment.
