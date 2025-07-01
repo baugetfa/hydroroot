@@ -5,15 +5,15 @@
 
 Welcome to HydroRoot's documentation!
 =====================================
+.. image:: _static/example_k_adjust.png
 
 .. toctree::
-      :maxdepth: 2
+      :maxdepth: 1
       :caption: Contents:
 
       installation.rst
       quick-start.rst
       notebook_examples.rst
-      usage.rst
       modeling.rst
       api.rst
       references.rst
