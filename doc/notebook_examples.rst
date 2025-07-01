@@ -1,5 +1,5 @@
 ===================
-usage: gallery of examples
+Gallery of examples
 ===================
 
 .. nbgallery::
