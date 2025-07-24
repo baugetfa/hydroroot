@@ -203,7 +203,7 @@ def my_colormap_old(g, property_name, cmap='jet',lognorm=True):
     #my_colorbar(values, _cmap, norm)
 
     colors = (_cmap(values)[:,0:3])*255
-    colors = np.array(colors,dtype=np.int).tolist()
+    colors = np.array(colors,dtype=int).tolist()
 
     g.properties()['color'] = dict(list(zip(keys,colors)))
 
