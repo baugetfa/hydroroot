@@ -106,7 +106,7 @@ if __name__ == '__main__':
     # g has radius, here we set fictive radii just for visual comfort
     alpha = 0.2  # radius in millimeter identical for all orders
     plot(g, has_radius = False, r_base = alpha * 1.e-3, r_tip = alpha * 9.9e-4)
-    pgl.Viewer.widgetGeometry.setSize(450, 600)  # set the picture size in px
+    pgl.Viewer.widgetGeometry.setSize(800, 800)  # set the picture size in px
     fn = tempfile.mktemp(suffix = '.png')
     pgl.Viewer.saveSnapshot(fn)
     pgl.Viewer.stop()
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     dseeds = pd.read_csv('data_figures/sup-fig-5-B.csv')
 
     for id in dseeds.index:
-        seed = dseeds.seed[id]
+        seed = int(dseeds.seed[id]) # otherwise this a numpy.int64 and the function random.seed does not like it
         primary_length = dseeds.primary_length[id]
         delta = dseeds.delta[id]
         nude_length = dseeds.nude_length[id]
@@ -132,7 +132,7 @@ if __name__ == '__main__':
         # g has radius, here we set fictive radii just for visual comfort
         alpha = 0.2  # radius in millimeter identical for all orders
         plot(g, has_radius = False, r_base = alpha * 1.e-3, r_tip = alpha * 9.9e-4)
-        pgl.Viewer.widgetGeometry.setSize(450, 600)  # set the picture size in px
+        pgl.Viewer.widgetGeometry.setSize(800, 800)  # set the picture size in px
         fn = tempfile.mktemp(suffix = '.png')
         pgl.Viewer.saveSnapshot(fn)
         pgl.Viewer.stop()

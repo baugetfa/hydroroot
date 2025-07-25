@@ -83,7 +83,7 @@ if __name__ == '__main__':
             plot(gcopy, has_radius=False, r_base = alpha * 1.e-3, r_tip = alpha * 9.9e-4, prop_cmap = 'j')
 
             # to display in the notebook, comment to display in the 3D viewer
-            pgl.Viewer.widgetGeometry.setSize(450, 600) # set the picture size in px
+            pgl.Viewer.widgetGeometry.setSize(800, 800) # set the picture size in px
             fn = tempfile.mktemp(suffix='.png')
             pgl.Viewer.saveSnapshot(fn)
             pgl.Viewer.stop()
