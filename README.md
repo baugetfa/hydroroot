@@ -1,16 +1,12 @@
----
-title: OpenAlea.HydroRoot
----
+# HydroRoot
 
 [![CI status](https://github.com/openalea/hydroroot/actions/workflows/conda-package-build.yml/badge.svg)](https://github.com/openalea/hydroroot/actions/workflows/conda-package-build.yml)
-
 [![Documentation Status](https://readthedocs.org/projects/hydroroot/badge/?version=latest)](https://hydroroot.readthedocs.io/en/latest/?badge=latest)
-
 [![image](https://anaconda.org/openalea3/openalea.hydroroot/badges/version.svg)](https://anaconda.org/openalea3/openalea.hydroroot)
 
-# Software
+## Software
 
-## Authors
+### Authors
 
 > -   Christophe Pradal
 > -   Yann Boursiac
@@ -19,28 +15,28 @@ title: OpenAlea.HydroRoot
 > -   Christophe Godin
 > -   Christophe Maurel
 
-## Institutes
+### Institutes
 
 CIRAD / INRAE / inria / CNRS
 
-## Status
+### Status
 
 Python package
 
-## License
+### License
 
 CecILL-C
 
 **URL** : <https://hydroroot.rtfd.io>
 
-# About
+## About
 
-## Description
+### Description
 
 OpenAlea.HydroRoot is a hydraulic root architecture modelling and a root
 architecture system generator package.
 
-## Content
+### Content
 
 The OpenAlea.HydroRoot package contains a root architecture simulation
 model coupled with a water and solute transport solver. It contains a
@@ -48,20 +44,20 @@ pure hydraulic solver that is solved using resistance network analogy.
 It also contains a water and solute transport solver that is more
 complex and see the root as a continuous medium.
 
-## Example
+### Example
 
 Heat map representation of the incoming local radial flows on an
 arabidopsis root.
 
 ![Alt Text](example/data/fig-6E.png)
 
-## Installation
+### Installation
 
-### Conda Installation
+#### Conda Installation
 
     conda create -n hydroroot -c conda-forge -c openalea3 openalea.hydroroot
 
-### Requirements
+#### Requirements
 
 > -   openalea.mtg
 > -   openalea.plantgl
@@ -70,15 +66,15 @@ arabidopsis root.
 > -   numpy
 > -   scipy
 
-### Usage
+#### Usage
 
 See notebook in example directory.
 
-# Documentation
+## Documentation
 
 <https://hydroroot.rtfd.io>
 
-# Citations
+## Citations
 
 If you use Hydroroot for your research, please cite:
 
